@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "HyundaiSans";
+  src: url(font/hyundai-sans-text-office-regular.woff2) format("woff2"),
+    url(font/hyundai-sans-text-office-regular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+html,
+body {
+  position: relative;
+  height: 100%;
+}
+body {
+  font-family: "HyundaiSans", sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #333;
+}
+a,
+div,
+button,
+input {
+  outline: none;
+  border: 0;
+  box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 400;
+}
+ul,
+li {
+  list-style: none;
+}
