@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>현대자동차 - 현대닷컴 | 대한민국 대표 자동차회사 hyundai.com</title>
-    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="shortcut icon" href="images/favicon.ico" sizes="16x16" />
     <link rel="icon" href="images/favicon.ico" sizes="32x32" />
     <link rel="icon" href="images/favicon.ico" sizes="192x192" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="hyundai.css" />
+    <link
+      rel="stylesheet"
+      href="m-hyundai.css"
+      media="screen and (max-width:767px)"
+    />
     <script src="jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="hyundai.js" defer></script>
   </head>
   <body>
@@ -22,7 +32,7 @@
             <div class="header_wrap">
               <div class="dimmed"></div>
               <div class="nav_bar"></div>
-              <header id="header" class="header">
+              <header id="header" class="header isTransparent">
                 <div class="inner_wrap">
                   <div class>
                     <div class="logo">
@@ -98,7 +108,7 @@
                     <div class="lnb_menu">
                       <ul class="lnb_list">
                         <li class="lnb_sub_list lnb_01">
-                          <a href="#" class="lnb_depth0_btn"> 모델 </a>
+                          <a href="#" class="lnb_depth0_btn">모델</a>
                           <div class="sub_wrap">
                             <div class="sub_contents">
                               <div>
@@ -207,7 +217,7 @@
                           </div>
                         </li>
                         <li class="lnb_sub_list lnb_02">
-                          <a href="#" class="lnb_depth0_btn"> 구매/이벤트 </a>
+                          <button class="lnb_depth0_btn">구매/이벤트</button>
                           <div class="sub_wrap">
                             <div class="sub_contents">
                               <div>
@@ -316,7 +326,7 @@
                           </div>
                         </li>
                         <li class="lnb_sub_list lnb_03">
-                          <a href="#" class="lnb_depth0_btn"> 서비스/멤버십 </a>
+                          <button class="lnb_depth0_btn">서비스/멤버십</button>
                           <div class="sub_wrap">
                             <div class="sub_contents">
                               <div>
@@ -425,9 +435,7 @@
                           </div>
                         </li>
                         <li class="lnb_sub_list lnb_04">
-                          <a href="#" class="lnb_depth0_btn">
-                            디지털/고객지원
-                          </a>
+                          <button class="lnb_depth0_btn">고객지원</button>
                           <div class="sub_wrap">
                             <div class="sub_contents">
                               <div>
@@ -536,7 +544,7 @@
                           </div>
                         </li>
                         <li class="lnb_sub_list lnb_05">
-                          <a href="#" class="lnb_depth0_btn"> 브랜드 </a>
+                          <button class="lnb_depth0_btn">브랜드</button>
                           <div class="sub_wrap">
                             <div class="sub_contents">
                               <div>
@@ -645,35 +653,52 @@
                           </div>
                         </li>
                         <li class="lnb_sub_list hyundai_shop_logo">
-                          <button class="lnb_depth0_link">
-                            Bluelink Store
-                          </button>
+                          <button class="lnb_depth0_link">Shop</button>
                         </li>
                       </ul>
                       <div class="util_wrap">
                         <div class="util">
                           <div class="item-util">
                             <a href="#" class="btn btn-text text-link">
-                              Hi,
-                              <b>EV</b>
+                              Hi, <b>EV</b>
                             </a>
                           </div>
                           <div class="item-util">
                             <button class="lang-select btn-util-dropdown">
                               KR
                             </button>
+                            <div
+                              class="util-dropdown lang_wrap"
+                              style="display: none"
+                            >
+                              <ul>
+                                <li><a href="#">EN</a></li>
+                                <li><a href="#">CN</a></li>
+                                <li><a href="#">월드와이드</a></li>
+                                <li><a href="#">상용글로벌</a></li>
+                              </ul>
+                            </div>
                           </div>
                           <div class="line-divide"></div>
                           <div class="item-util">
                             <button
                               class="login-btn btn-util-dropdown"
                             ></button>
+                            <div class="login-wrap" style="display: none">
+                              <ul>
+                                <li><a href="#">개인 로그인</a></li>
+                                <li><a href="#">법인 로그인</a></li>
+                              </ul>
+                            </div>
                           </div>
                           <div class="item-util">
                             <button class="btn_search"></button>
                           </div>
                           <div class="item-util">
-                            <a href="#" class="menu-btn">
+                            <a
+                              href="#"
+                              class="menu-btn nuxt-link-exact-actvie nuxt-link-actvie"
+                            >
                               <span class="menu-ico">
                                 <span class="bar-center"></span>
                               </span>
@@ -707,7 +732,418 @@
               </header>
             </div>
           </div>
-          <div class="contant-area"></div>
+          <!--  -->
+          <!-- contant - area -->
+          <div class="contant-area">
+            <div class="container" id="main">
+              <div class="keyvisual-wrap black">
+                <div class="kv-main el-carousel el-carousel--v2">
+                  <div class="el-carousel__container">
+                    <button
+                      class="el-carousel__arrow el-carousel__arrow--left"
+                    ></button>
+                    <button
+                      class="el-carousel__arrow el-carousel__arrow--right"
+                    ></button>
+                    <div class="el-carousel__layer">
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">
+                                        IONIQ 6 N
+                                      </p>
+                                      <p class="sub-txt black">
+                                        Rule the Paradigm
+                                      </p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/main_kv_ioniq6_n_pc.avif"
+                                    alt="main_car1"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">
+                                        SONATA The Edge
+                                      </p>
+                                      <p class="sub-txt black">
+                                        익숙함도 완전히 새롭게
+                                      </p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/main_sonata_25my_w.avif"
+                                    alt="main_car2"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">
+                                        IONIQ 5 N
+                                      </p>
+                                      <p class="sub-txt black">
+                                        Everyday N Life
+                                      </p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/Main-KV_Car_IONIQ-5-N.avif"
+                                    alt="main_car1"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">
+                                        SANTA FE
+                                      </p>
+                                      <p class="sub-txt black">
+                                        일상과 일상 사이를 열다
+                                      </p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/main-santafe-25my-kv-w.avif"
+                                    alt="main_car1"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">TUCSON</p>
+                                      <p class="sub-txt black">날개를 달다</p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/Main-KV_Car_TUCSON.avif"
+                                    alt="main_car1"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">
+                                        The new IONIQ 6
+                                      </p>
+                                      <p class="sub-txt black">
+                                        새로운 흐름의 시작
+                                      </p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/main_kv_ioniq6_pc.avif"
+                                    alt="main_car1"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="el-carousel__item">
+                        <ul class="el-carousel__groups">
+                          <li class="el-carousel__unit">
+                            <div
+                              class="fluid-container"
+                              style="
+                                background: url(images/car-bg-w.avif) center top /
+                                  auto 100% no-repeat;
+                              "
+                            >
+                              <div class="txt-wrap">
+                                <a href="#" class="btn link-txt nlink">
+                                  <span>
+                                    <div class="txt-inner">
+                                      <p class="car-name long black">
+                                        2026 CASPER Electric
+                                      </p>
+                                      <p class="sub-txt black">
+                                        아이코닉한 디자인의 완성
+                                      </p>
+                                    </div>
+                                  </span>
+                                </a>
+                              </div>
+                              <a href="#" class="btn btn-text">
+                                <span>
+                                  <img
+                                    src="images/Main-KV_Car_CASPER-Electric.avif"
+                                    alt="main_car1"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <!--  -->
+                      <!--  -->
+                      <button
+                        class="el-carousel__arrow el-carousel__arrow--left el-carousel__arrow--custom el-carousel__arrow--type1"
+                      >
+                        <span class="el-icon-arrow-left"></span>
+                      </button>
+                      <button
+                        class="el-carousel__arrow el-carousel__arrow--right el-carousel__arrow--custom el-carousel__arrow--type1"
+                      >
+                        <span class="el-icon-arrow-right"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="control-wrap">
+                  <div class="model-name model-name--black">
+                    <div class="prev-model-name"></div>
+                    <div class="next-model-name"></div>
+                  </div>
+                  <div class="control-wrap__indicator">
+                    <ul class="slideinfo-list slideinfo-list--black">
+                      <li class="slideinfo-list__item">
+                        <button class="slideinfo-list__link"></button>
+                      </li>
+                    </ul>
+                    <div class="control-wrap__btns">
+                      <button class="btn-control--toggle"></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="quick-menu">
+                  <div class="el-carousel el-carousel--v2">
+                    <div class="el-carousel__container">
+                      <button
+                        class="el-carousel__arrow el-carousel__arrow--left"
+                      ></button>
+                      <button
+                        class="el-carousel__arrow el-carousel__arrow--right"
+                      ></button>
+                      <div class="el-carousel__layer">
+                        <div class="el-carousel__item">
+                          <ul class="items-wrap">
+                            <li class="menu-icon icon-1">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 견적내기 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-2">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 구매상담 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-3">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 시승신청 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-4">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 판매처 검색 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-5">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 구매혜택 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-6">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 정비예약 </span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="el-carousel__item">
+                          <ul class="items-wrap">
+                            <li class="menu-icon icon-7">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 블루멤버스 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-8">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 포인트 사용 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-9">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 내비 업데이트 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-10">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 보증수리 안내 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-11">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 중고차 </span>
+                              </a>
+                            </li>
+                            <li class="menu-icon icon-12">
+                              <a href="#" class="btn menu-link btn-text">
+                                <span> 이벤트 </span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <button
+                          class="el-carousel__arrow el-carousel__arrow--left el-carousel__arrow--custom el-carousel__arrow--type1"
+                        >
+                          <span class="el-icon-arrow-left"></span>
+                        </button>
+                        <button
+                          class="el-carousel__arrow el-carousel__arrow--right el-carousel__arrow--custom el-carousel__arrow--type1"
+                        >
+                          <span class="el-icon-arrow-right"></span>
+                        </button>
+                      </div>
+                    </div>
+                    <ul class="el-carousel__indicators">
+                      <li class="el-carousel__indicator">
+                        <button class="el-carousel__button"></button>
+                      </li>
+                      <li class="el-carousel__indicator">
+                        <button class="el-carousel__button"></button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="content-wrap"></div>
+              <div></div>
+            </div>
+            <div class="area-floating">
+              <div class="menu-floating">
+                <div class="hdr-floating">
+                  <a href="#" class="hdr-link">
+                    <span class="hdr-img">
+                      <span class="sr-only">All-in-One 구매 가이드</span>
+                    </span>
+                  </a>
+                </div>
+                <div class="btn-circle">
+                  <button class="btn ibtn chatbot"></button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="foot-area"></div>
         </div>
       </div>
