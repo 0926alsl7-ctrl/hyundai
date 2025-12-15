@@ -128,6 +128,29 @@ a.btn.btn-text {
   color: #002c5f;
   background-color: transparent;
 }
+.btn[class*="btn-more"],
+a.btn[class*="btn-more"] {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background-color: transparent;
+  color: #000;
+}
+.btn[class*="btn-more"].btn-more-blue,
+a.btn[class*="btn-more"].btn-more-blue {
+  color: #002c5f;
+}
+.btn.btn-md,
+a.btn.btn-md {
+  width: 120px;
+}
+.btn[class*="btn-md"],
+a.btn[class*="btn-md"] {
+  font-family: "HyundaiSansHead", sans-serif;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+}
 /* Components */
 .header a {
   color: #666;
@@ -159,9 +182,33 @@ a.btn.btn-text {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+.m-br {
+  display: none;
+}
+.mob-only {
+  display: none;
+}
 /* Layout */
 /* Section */
 /* 1. tab-area ========================================================= */
+/* nav */
+.nav_bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: block;
+  height: 5px;
+  background-color: #007fa8;
+  transition: 0.2s linear;
+}
+.nav_bar.isFixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+}
+/* header */
 .header {
   position: relative;
   top: 0;
@@ -180,6 +227,16 @@ a.btn.btn-text {
 .header.isBgWhite {
   background-color: #fff !important;
 }
+.header.isFixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: hsla(0, 0%, 100%, 0.9) !important;
+  backdrop-filter: blur(5px);
+  border-bottom: 1px solid #e5e5e5;
+}
+
 .header .inner_wrap {
   max-width: 1400px;
   margin: 0 auto;
@@ -400,6 +457,7 @@ svg:not(:root) {
   button.lang-select.is-open::after {
   transform: rotate(180deg);
 }
+
 .header
   .inner_wrap
   .gnb_wrap
@@ -410,7 +468,7 @@ svg:not(:root) {
   button.lang-select
   + .lang_wrap {
   position: absolute;
-  top: 55px;
+  top: 50px;
   left: 50%;
   z-index: 999;
   width: 108px;
@@ -419,6 +477,7 @@ svg:not(:root) {
   border: 1px solid #eee;
   border-top: 0;
   transform: translateX(-50%);
+  display: none;
 }
 .header
   .inner_wrap
@@ -471,7 +530,7 @@ svg:not(:root) {
   height: 0.9em;
   background: #999;
 }
-/* login is open 추가 ================================================= ============================================================= */
+/*  ============================================================================================================== */
 .header
   .inner_wrap
   .gnb_wrap
@@ -518,6 +577,7 @@ svg:not(:root) {
   border-top: 0;
   background-color: #fff;
   transform: translate(-50%, 0);
+  display: none;
 }
 .header
   .inner_wrap
@@ -609,7 +669,8 @@ svg:not(:root) {
   background-position: 0 0;
   background-size: 100%;
 }
-.header
+/* login/lang is open 추가 =====================================================  */
+/* .header
   .inner_wrap
   .gnb_wrap
   .lnb_menu
@@ -628,8 +689,49 @@ svg:not(:root) {
   button.lang-select:hover
   ~ .lang_wrap {
   display: block !important;
+} */
+.header .item-util:has(.lang-select):hover .lang_wrap,
+.header .item-util:has(.lang-select):focus-within .lang_wrap {
+  display: block !important;
 }
-
+.header
+  .inner_wrap
+  .gnb_wrap
+  .lnb_menu
+  .util_wrap
+  .util
+  .item-util
+  button.lang-select
+  + .lang_wrap
+  ul
+  li
+  a:focus,
+.header
+  .inner_wrap
+  .gnb_wrap
+  .lnb_menu
+  .util_wrap
+  .util
+  .item-util
+  button.lang-select
+  + .lang_wrap
+  ul
+  li
+  a:hover {
+  color: #002c5f;
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+}
+/* .header
+  .inner_wrap
+  .gnb_wrap
+  .lnb_menu
+  .util_wrap
+  .util
+  .item-util
+  button.login-btn:focus-visible
+  ~ .login-wrap,
 .header
   .inner_wrap
   .gnb_wrap
@@ -638,7 +740,12 @@ svg:not(:root) {
   .util
   .item-util
   button.login-btn:hover
-  ~ .login_wrap {
+  ~ .login-wrap {
+  display: block !important;
+} */
+
+.header .item-util:has(.login-btn):hover .login-wrap,
+.header .item-util:has(.login-btn):focus-within .login-wrap {
   display: block !important;
 }
 /* menu창 */
@@ -990,7 +1097,7 @@ a.btn::before {
 .control-wrap .model-name .next-model-name {
   right: 108px;
 }
-.control-wrap__indicator {
+.keyvisual-wrap .control-wrap__indicator {
   position: absolute;
   left: 0;
   right: 0;
@@ -1002,18 +1109,18 @@ a.btn::before {
   z-index: 10;
   -webkit-box-pack: center;
 }
-.slideinfo-list {
+.keyvisual-wrap .slideinfo-list {
   display: flex;
   justify-content: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-box-pack: center;
 }
-.slideinfo-list__item {
+.keyvisual-wrap .slideinfo-list__item {
   font-size: 0;
   padding: 6px;
 }
-.slideinfo-list__link {
+.keyvisual-wrap .slideinfo-list__link {
   width: 12px;
   height: 12px;
   border-radius: 60%;
@@ -1028,7 +1135,7 @@ a.btn::before {
   overflow: hidden;
   background: rgba(0, 0, 0, 0.1);
 }
-.slideinfo-list__link::after {
+.keyvisual-wrap .slideinfo-list__link::after {
   content: "";
   display: inline-block;
   width: 12px;
@@ -1038,7 +1145,7 @@ a.btn::before {
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.slideinfo-list__link.is-active {
+.keyvisual-wrap .slideinfo-list__link.is-active {
   background: #007fa8;
 }
 .control-wrap__btns {
@@ -1328,6 +1435,751 @@ a.btn::before {
   background: rgba(0, 0, 0, 0.1);
 }
 /* content - wrap ==================================================================== */
+.customer-status-wrap {
+  background-color: #e4dcd3;
+}
+.content {
+  padding: 0 0 160px;
+}
+.contant-area .container .content-wrap .content .section-wrap:nth-child(2) {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 140px 0 0;
+}
+.content .section-wrap.common {
+  padding-top: 140px;
+  text-align: center;
+}
+.content .section-wrap.common > .title {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -0.4px;
+}
+.content .section-wrap.common > .tit-tail {
+  margin: 30px 0 0;
+  font-size: 14px;
+  letter-spacing: -0.24px;
+  color: #666 !important;
+  line-height: 34px;
+}
+.section-wrap .model-wrap {
+  position: relative;
+  min-width: 1120px;
+}
+.section-wrap .model-wrap .control-wrap__indicator {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  margin: 0 0 0 80px;
+  z-index: 5;
+}
+.section-wrap .model-wrap .control-wrap__indicator .slideinfo-list {
+  display: flex;
+}
+.section-wrap .model-wrap .control-wrap__indicator .slideinfo-list__item {
+  position: relative;
+  margin: 0 0 0 32px;
+}
+.section-wrap
+  .model-wrap
+  .control-wrap__indicator
+  .slideinfo-list__item::before {
+  content: "";
+  position: absolute;
+  left: -17px;
+  top: 8px;
+  display: block;
+  width: 1px;
+  height: 14px;
+  background: #999;
+}
+.section-wrap
+  .model-wrap
+  .control-wrap__indicator
+  .slideinfo-list__item:first-child {
+  margin-left: 0;
+}
+.section-wrap
+  .model-wrap
+  .control-wrap__indicator
+  .slideinfo-list__item:first-child::before {
+  display: none;
+}
+.section-wrap .model-wrap .control-wrap__indicator .slideinfo-list__link {
+  font-size: 15px;
+  letter-spacing: -0.24px;
+  color: #666;
+  line-height: 30px;
+}
+.section-wrap
+  .model-wrap
+  .control-wrap__indicator
+  .slideinfo-list__link::after {
+  display: none;
+}
+.section-wrap
+  .model-wrap
+  .control-wrap__indicator
+  .slideinfo-list__link.is-active {
+  color: #007fa8;
+}
+/* box-list-slide */
+.el-carousel--hide-l-arrow .el-carousel__arrow--left,
+.el-carousel--hide-r-arrow .el-carousel__arrow--right {
+  display: none;
+}
+.section-wrap .model-wrap .box-list-slide {
+  margin: 51px 0 0;
+}
+.section-wrap .model-wrap .box-list-slide .el-carousel__arrow--left {
+  left: 0;
+}
+.section-wrap .model-wrap .box-list-slide .el-carousel__arrow--right {
+  right: 0;
+}
+.section-wrap .model-wrap .el-carousel__groups {
+  position: relative;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 1120px;
+  margin: 0 auto;
+  font-size: 0;
+  -webkit-box-align: end;
+  -webkit-box-pack: justify;
+}
+.section-wrap .model-wrap .el-carousel__unit:first-child {
+  margin: 0 32px 0 0;
+}
+.section-wrap .model-wrap .el-carousel__unit {
+  margin-left: 32px;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__item
+  li.el-carousel__unit:first-child
+  .link::before {
+  content: "1위";
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 60px;
+  height: 60px;
+  background: #007fa8;
+  /* font-family: "HyundaiSansHead", sans-serif; */
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.24px;
+  color: #fff;
+  line-height: 60px;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__item
+  li.el-carousel__unit:first-child
+  .link
+  img {
+  width: 576px;
+  height: 100%;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__unit
+  .list
+  > li
+  .link
+  img {
+  width: 224px;
+  height: auto;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__item
+  li.el-carousel__unit:first-child
+  .link
+  .txt-wrap {
+  position: absolute;
+  left: 50%;
+  top: 65px;
+  margin: 0 0 0 80px;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__unit
+  .list
+  > li
+  .link
+  .txt-wrap {
+  margin: 13px 0 3px;
+  text-align: left;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__unit
+  .list
+  > li
+  .link
+  .txt-wrap
+  .txt {
+  color: #000;
+  font-size: 16px;
+  letter-spacing: -0.24px;
+  /* font-family: "HyundaiSansHead", sans-serif; */
+  line-height: 30px;
+  font-weight: bolder;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__item
+  li.el-carousel__unit:first-child
+  .link
+  .txt-wrap
+  .txt {
+  font-size: 35px;
+  line-height: 40px;
+}
+/* section02 =========================================================================== */
+.contant-area .container .content-wrap .content .section-wrap:nth-child(3) {
+  max-width: 1640px;
+  margin: 0 auto;
+  padding: 140px 0 0 !important;
+  text-align: center;
+}
+.content .section-wrap.common .section-body {
+  max-width: 1180px;
+  margin: 60px auto 0;
+  padding: 0 30px;
+}
+.electric-wrap {
+  display: flex;
+  gap: 32px;
+  margin-top: 50px;
+}
+.electric-car {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 384px);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.electric-car-kv {
+  width: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+.electric-car-kv .thumb {
+  height: 100%;
+  font-size: 0;
+}
+.electric-car-kv .thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.electric-car-head {
+  position: absolute;
+  top: 34px;
+  left: 40px;
+  text-align: left;
+}
+.electric-car-head.white .tit,
+.electric-car-head.white .btn,
+.electric-car-head.white .desc {
+  color: #fff !important;
+}
+.electric-car-head .tit {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 44px;
+  letter-spacing: -0.4px;
+}
+.electric-car-head .desc {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 15px;
+  line-height: 30px;
+  letter-spacing: -0.4px;
+  margin-top: 5px;
+  font-weight: 700;
+}
+.electric-car-head .btn {
+  margin-top: 13px;
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+.btn[class*="btn-more"]::after,
+a.btn[class*="btn-more"]::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  transform: rotate(-45deg);
+  margin-left: 6px;
+}
+.electric-car-head .btn::after {
+  border-color: #fff;
+}
+.electric-car-info {
+  flex-grow: 1;
+  position: relative;
+  padding: 35px 40px 37px;
+  background: #f6f3f2;
+  text-align: left;
+  -webkit-box-flex: 1;
+}
+.electric-car-info .tit {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 22px;
+  letter-spacing: -1px;
+  color: #000;
+  line-height: 34px;
+  font-weight: 700;
+}
+.electric-car-info .desc {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 30px;
+  letter-spacing: -0.4px;
+  color: #666;
+}
+.electric-car-info .link-lists {
+  display: flex;
+  margin-top: 34px;
+}
+.electric-car-info .link-lists > li {
+  position: relative;
+  margin-left: 22px;
+  padding-left: 21px;
+}
+.electric-car-info .link-lists > li:last-child::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1px;
+  height: 80%;
+  background: #999;
+  transform: translateY(-50%);
+}
+.electric-car-info .link-lists > li:first-child {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.electric-car-info .link-lists > li .btn {
+  font-family: "HyundaiSansHead";
+  font-weight: 700;
+  font-size: 14px;
+}
+.electric-car-info::after {
+  content: "";
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 180px;
+  height: 91px;
+  background: url(images/main_hi_ev_icon.avif) no-repeat 0 0;
+  background-size: 180px auto;
+}
+
+.electric-carousel {
+  width: 352px;
+  position: relative;
+  background: #f5f5f5;
+}
+
+.electric-lists {
+  height: 100%;
+}
+.electric-carousel .el-carousel__unit {
+  width: 100%;
+}
+.electric-box {
+  padding: 40px 30px 0;
+}
+.electric-box .vehicle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 37px;
+  font-size: 30px;
+  line-height: 37px;
+  text-align: center;
+  font-family: "HyundaiSansHead", sans-serif;
+  font-weight: 500;
+}
+.electric-box .thumb {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+}
+.electric-box .thumb > img {
+  width: 100%;
+}
+.electric-box .info {
+  margin-top: 15px;
+  text-align: left;
+}
+.electric-box .info-desc {
+  display: flex;
+  justify-content: space-between;
+  -webkit-box-pack: justify;
+  margin-top: 13px;
+}
+.electric-box .info-desc:first-child {
+  margin-top: 0;
+}
+.electric-box .info-desc:last-child {
+  height: 22px;
+}
+.electric-box .info-desc > strong {
+  display: block;
+  width: 40%;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: bolder;
+}
+.electric-box .info-desc > span {
+  display: block;
+  width: 60%;
+  font-size: 15px;
+  line-height: 22px;
+  text-align: right;
+  color: #666;
+  font-weight: bolder;
+}
+.electric-box .btn-wrap {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #ccc;
+}
+.electric-box .btn-wrap .btn {
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.electric-carousel .el-carousel__indicators {
+  width: calc(100% - 30px);
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  padding: 0;
+  z-index: 2;
+  text-align: center;
+}
+.electric-carousel .el-carousel__indicator {
+  padding: 0 4px;
+  /* margin-right: 4px; */
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.electric-carousel .el-carousel__indicator .el-carousel__button {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: transparent;
+  opacity: 1;
+  font-size: 0;
+  overflow: hidden;
+}
+.electric-carousel .el-carousel__arrow {
+  color: #fff !important;
+}
+.electric-carousel .el-carousel__indicator.is-active .el-carousel__button {
+  background-color: #007fa8 !important;
+  opacity: 1;
+}
+/* section03 =========================================================================== */
+.contant-area .container .content-wrap .content .section-wrap:nth-child(4) {
+  margin: 0 auto;
+  text-align: center;
+}
+.section-wrap .trendy-hyundai {
+  display: flex;
+  justify-content: space-between;
+  -webkit-box-pack: justify;
+}
+.section-wrap .trendy-hyundai__info {
+  width: 100%;
+  padding: 52px 60px 0;
+  background: #f6f3f2;
+  text-align: left;
+}
+.section-wrap .trendy-hyundai__info .tit {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 44px;
+  letter-spacing: -0.4px;
+}
+.section-wrap .trendy-hyundai__info .tit span {
+  font-family: "HyundaiSans", sans-serif;
+}
+.section-wrap .trendy-hyundai__info .txt {
+  margin: 13px 0 0;
+  font-size: 14px;
+  font-weight: bolder;
+  line-height: 30px;
+  letter-spacing: -0.4px;
+  font-family: "HyundaiSans", sans-serif;
+}
+.section-wrap .trendy-hyundai__info .btn.btn-md {
+  margin: 50px 0 0;
+}
+.section-wrap .trendy-hyundai__img img {
+  vertical-align: top;
+}
+/* section04 =========================================================================== */
+.contant-area .container .content-wrap .content .section-wrap:nth-child(5) {
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 140px;
+}
+
+.contant-area
+  .container
+  .content-wrap
+  .content
+  .section-wrap:nth-child(5).common
+  .section-body {
+  max-width: 1180px;
+  margin: 60px auto 0;
+  padding: 0 30px;
+}
+.section-wrap .story-list {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  margin: 51px 0 0;
+  -webkit-box-pack: end;
+}
+.section-wrap .story-list > li {
+  position: relative;
+  flex: none;
+  margin: 0 0 0 32px;
+  font-size: 0;
+  -webkit-box-flex: 0;
+}
+.section-wrap .story-list > li .link {
+  display: block;
+}
+.section-wrap .story-list > li .link .img img {
+  width: 352px;
+  height: 100%;
+}
+.section-wrap .story-list > li .link .txt {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 9px 0 10px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  letter-spacing: -0.24px;
+  color: #fff;
+  line-height: 30px;
+  text-align: left;
+}
+.section-wrap .shop-best-wrap {
+  display: flex;
+  max-height: 288px;
+  margin-top: 40px;
+  text-align: left;
+}
+.section-wrap .shop-best-wrap .view-more {
+  position: relative;
+  padding: 40px 30px 0;
+  min-width: 224px;
+  background: #f6f3f2;
+}
+.section-wrap .shop-best-wrap .view-more .tit {
+  font-size: 24px;
+  letter-spacing: -0.24px;
+  color: #000;
+  line-height: 26px;
+  font-family: "HyundaiSansHead", sans-serif;
+}
+.section-wrap .shop-best-wrap .view-more .link {
+  position: absolute;
+  top: 164px;
+  display: block;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 30px;
+  letter-spacing: -0.4px;
+  color: #002c5f;
+  font-weight: bolder;
+}
+.section-wrap .shop-best-wrap .view-more .link::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+  background: url(images/ico_btn.avif) no-repeat;
+  background-position: 0 -19px;
+  margin-left: 6px;
+}
+.section-wrap .shop-best-wrap .view-more .txt {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 30px;
+  letter-spacing: -0.4px;
+  color: #666;
+  font-weight: bold;
+}
+.section-wrap .shop-best-wrap .best-list {
+  display: flex;
+  width: calc(100% - 224px);
+}
+.section-wrap .shop-best-wrap .best-list > li {
+  width: 25%;
+  margin-left: 32px;
+}
+.section-wrap .shop-best-wrap .best-list > li .link {
+  position: relative;
+  display: block;
+  font-size: 0;
+  text-align: left;
+}
+.section-wrap .shop-best-wrap .best-list > li .link .ranking {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  background: #007fa8;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: -0.4px;
+  color: #fff;
+  text-align: center;
+  -webkit-box-align: center;
+  font-family: "HyundaiSansHead", sans-serif;
+}
+.section-wrap .shop-best-wrap .best-list > li .link .img {
+  border: 1px solid #e5e5e5;
+}
+.section-wrap .shop-best-wrap .best-list > li .link .img img {
+  width: 190px;
+  height: 100%;
+}
+.section-wrap .shop-best-wrap .best-list > li .link .product {
+  overflow: hidden;
+  display: -webkit-box;
+  margin: 15px 0 0;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  letter-spacing: -0.24px;
+  color: #000;
+  line-height: 26px;
+  word-break: keep-all;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.section-wrap .shop-best-wrap .best-list > li .link .price-wrap {
+  display: flex;
+  margin: 4px 0 0;
+  font-size: 15px;
+  letter-spacing: -0.24px;
+  color: #000;
+  line-height: 26px;
+}
+.section-wrap .shop-best-wrap .best-list > li .link .price-wrap .price strong {
+  margin: 0 5px;
+  font-size: 22px;
+  font-weight: bold;
+}
+/* section - brand ======================================================== */
+.brand .el-carousel {
+  margin: 51px 0 0;
+}
+.brand .el-carousel__groups {
+  gap: 2.86%;
+  max-width: 1120px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  margin: 0 auto;
+  -webkit-box-pack: end;
+}
+.brand .list > li {
+  position: relative;
+  -webkit-box-flex: 0;
+}
+.brand .list > li .link {
+  overflow: hidden;
+  display: block;
+  color: #fff;
+  font-size: 0;
+}
+.brand .list > li .link img {
+  width: 100%;
+  height: auto;
+  transition: all 0.5s ease;
+}
+
+.brand .list > li .link .txt-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  font-size: 18px;
+  letter-spacing: -0.24px;
+  color: #fff;
+  line-height: 30px;
+  text-align: center;
+  opacity: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-box-pack: center;
+}
+
+.brand .list > li:hover .txt-wrap {
+  opacity: 1;
+}
+.brand .list > li .link .txt-wrap .txt {
+  margin: 5px 0 0;
+  font-size: 16px;
+}
+/* section -events ======================================================== */
+.content .section-wrap.common .section-body.wide {
+  max-width: 1700px;
+}
 /* area - floating =====================================================================  */
 .area-floating {
   position: fixed;
@@ -1395,17 +2247,5 @@ a.btn::before {
 @media screen and (min-width: 768px) and (min-width: 1025px) {
   .header .inner_wrap .gnb_wrap {
     min-width: calc(510px + 29%);
-  }
-}
-@media screen and (min-width: 768px) {
-  .nav_bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    display: block;
-    height: 5px;
-    background-color: #007fa8;
-    transition: 0.2s linear;
   }
 }
