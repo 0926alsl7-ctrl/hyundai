@@ -1996,11 +1996,12 @@ a.btn[class*="btn-more"]::after {
   width: 100%;
   padding: 9px 0 10px 20px;
   background: rgba(0, 0, 0, 0.5);
-  font-size: 18px;
-  letter-spacing: -0.24px;
+  font-size: 16px;
+  letter-spacing: -0.6px;
   color: #fff;
   line-height: 30px;
   text-align: left;
+  font-weight: 900 !important;
 }
 .section-wrap .shop-best-wrap {
   display: flex;
@@ -2141,6 +2142,16 @@ a.btn[class*="btn-more"]::after {
   display: block;
   color: #fff;
   font-size: 0;
+  position: relative;
+}
+.brand .list > li .link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
 }
 .brand .list > li .link img {
   width: 100%;
@@ -2158,12 +2169,14 @@ a.btn[class*="btn-more"]::after {
   flex-direction: column;
   justify-content: center;
   padding: 0 20px;
-  font-size: 18px;
-  letter-spacing: -0.24px;
+  font-size: 16px;
+  letter-spacing: -0.6px;
   color: #fff;
   line-height: 30px;
   text-align: center;
   opacity: 0;
+  z-index: 2;
+  transition: opacity 0.4s ease;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-box-pack: center;
@@ -2172,9 +2185,19 @@ a.btn[class*="btn-more"]::after {
 .brand .list > li:hover .txt-wrap {
   opacity: 1;
 }
+.brand .list > li:hover img {
+  transform: scale(1.08);
+}
+.brand .list > li:hover .link::before {
+  opacity: 1;
+}
 .brand .list > li .link .txt-wrap .txt {
   margin: 5px 0 0;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bolder;
+}
+.brand .list > li .link .txt-wrap .tit {
+  font-weight: 900;
 }
 /* section -events ======================================================== */
 .content .section-wrap.common .section-body.wide {
