@@ -2,9 +2,9 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>현대자동차 - 현대닷컴 | 대한민국 대표 자동차회사 hyundai.com</title>
-    <link rel="shortcut icon" href="images/favicon.ico" sizes="16x16" />
+    <link rel="icon" href="images/favicon.ico" sizes="16x16" />
     <link rel="icon" href="images/favicon.ico" sizes="32x32" />
     <link rel="icon" href="images/favicon.ico" sizes="192x192" />
     <link
@@ -29,12 +29,12 @@
       <div id="__layout">
         <div id="app" class>
           <div class="tap-area">
-            <div class="header_wrap">
-              <div class="dimmed"></div>
+            <div class="header_wrap isTransparent">
+              <!-- <div class="dimmed"></div> -->
               <div class="nav_bar"></div>
               <header id="header" class="header isTransparent">
                 <div class="inner_wrap">
-                  <div class>
+                  <div class="top-area">
                     <div class="logo">
                       <h1>
                         <button class="logo-link">
@@ -94,7 +94,6 @@
                     </div>
                     <div class="mobile-controller">
                       <button class="search-btn">
-                        <span>검색</span>
                       </button>
                       <button class="menu-btn">
                         <span class="menu-ico">
@@ -1135,9 +1134,9 @@
                       최근 한 달 동안 고객님들이 가장 많이 구매하신 모델입니다.
                     </p>
                     <div class="model-wrap">
-                      <div class="control-wrap__indicator">
-                        <ul class="slideinfo-list">
-                          <li class="slideinfo-list__item">
+                      <div class="control-wrap__indicator tab-menu">
+                        <ul class="slideinfo-list tab-menu__icon-wrapper">
+                          <li class="slideinfo-list__item tab-menu__icon">
                             <button
                               class="slideinfo-list__link is-active"
                               data-type="all"
@@ -1173,10 +1172,11 @@
                       </div>
                       <div
                         class="box-list-slide el-carousel el-carousel--v2 el-carousel--hide-l-arrow el-carousel--hide-r-arrow"
-                      >
+                        style="overflow-y: hidden;"
+                        >
                         <div
                           class="el-carousel__container"
-                          style="height: 432px"
+                          style="height: 432px;"
                         >
                           <button
                             class="el-carousel__arrow el-carousel__arrow--left"
@@ -2155,7 +2155,7 @@
                 </div>
               </div>
             </div>
-            <div class="area-floating" style="bottom: 80px;">
+            <div class="area-floating">
               <div class="menu-floating">
                 <div class="hdr-floating">
                   <a href="#" class="hdr-link">

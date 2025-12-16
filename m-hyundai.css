@@ -1,0 +1,529 @@
+.m-br {
+  display: block;
+}
+.mob-only {
+  display: block;
+}
+.pc-br {
+  display: none;
+}
+/* button */
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.btn,
+a.btn {
+  width: 280px;
+  height: 40px;
+  border: 0;
+  background: #002c5f;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: #fff;
+  cursor: pointer;
+}
+.btn,
+a.btn,
+a.btn::before,
+a.btn span {
+  display: inline-block;
+  vertical-align: middle;
+}
+a.btn {
+  text-align: center;
+}
+a.btn::before {
+  content: "";
+  height: 100%;
+}
+.btn.btn-text,
+a.btn.btn-text {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  color: #002c5f;
+  background-color: transparent;
+}
+/* nav */
+/* header */
+.header {
+  height: 55px;
+  padding: 0;
+}
+.m-search {
+  display: none;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  z-index: 998;
+}
+
+/* .gnb_wrap {
+  display: none !important;
+} */
+.header .top-mobile-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 99;
+  padding: 0 15px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 55px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+.header.isTransparent .top-mobile-area {
+  background-color: transparent;
+  border-bottom: none;
+}
+.header .top-mobile-area .logo h1 {
+  margin: 0;
+}
+.header .top-mobile-area .logo h1 .logo-link {
+  width: 35px;
+  display: block;
+  overflow: hidden;
+}
+.header .top-mobile-area .logo h1 .logo-link svg {
+  display: block;
+  width: 362.5%;
+  transition: 0.3s;
+}
+/* header - mobile-controller */
+.header .top-mobile-area .mobile-controller {
+  display: flex;
+  align-items: center;
+  -webkit-box-align: center;
+}
+.header .top-mobile-area .mobile-controller button {
+  vertical-align: middle;
+  margin-left: 15px;
+}
+.header .top-mobile-area .mobile-controller .search-btn {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url(images/m_search_default.avif);
+  background-size: 100%;
+}
+.header .top-mobile-area .mobile-controller .menu-btn {
+  position: relative;
+  vertical-align: top;
+  display: inline-block;
+}
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 17px;
+}
+
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico::before,
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico::after,
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico .bar-center {
+  position: absolute;
+  display: block;
+  height: 2px;
+  background-color: #000;
+  transition: 0.3s;
+}
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico .bar-center {
+  top: 50%;
+  right: 0;
+  width: 14px;
+  margin-top: -1px;
+}
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico::before,
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico::after {
+  content: "";
+  width: 100%;
+}
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico::before {
+  top: 0;
+}
+.header .top-mobile-area .mobile-controller .menu-btn .menu-ico::after {
+  bottom: 0;
+}
+.m-search {
+  display: none;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  z-index: 998;
+}
+/* contant-area */
+.contant-area,
+.foot-area {
+  position: relative;
+}
+/* kyvisual-main */
+.keyvisual-wrap .el-carousel {
+  height: 162.5vw;
+}
+.keyvisual-wrap .el-carousel.kv-main .el-carousel__container {
+  height: 162.5vw !important;
+}
+.keyvisual-wrap .el-carousel__groups .fluid-container {
+  background-size: cover !important;
+}
+.keyvisual-wrap .el-carousel__groups .fluid-container .txt-wrap {
+  top: 26vw;
+  width: auto;
+}
+.keyvisual-wrap .el-carousel__groups .fluid-container .txt-wrap .link-txt {
+  width: 100%;
+  text-align: left;
+}
+.keyvisual-wrap
+  .el-carousel__groups
+  .fluid-container
+  .txt-wrap
+  .link-txt
+  .txt-inner
+  .car-name.long {
+  font-size: 8.35vw;
+  line-height: 1.27em;
+}
+.keyvisual-wrap
+  .el-carousel__groups
+  .fluid-container
+  .txt-wrap
+  .link-txt
+  .txt-inner
+  .car-name {
+  word-break: keep-all;
+  letter-spacing: -0.25px;
+}
+.keyvisual-wrap
+  .el-carousel__groups
+  .fluid-container
+  .txt-wrap
+  .link-txt
+  .txt-inner
+  .sub-txt {
+  margin-top: 0.5vw;
+  font-size: 5vw;
+  letter-spacing: -0.25px;
+}
+.keyvisual-wrap .el-carousel__groups .fluid-container .banner-img-wrap img,
+.keyvisual-wrap .el-carousel__groups .fluid-container a img {
+  margin-top: -19px;
+}
+.keyvisual-wrap .el-carousel__groups .fluid-container a img {
+  height: auto !important;
+}
+.keyvisual-wrap .el-carousel__unit img {
+  width: 100%;
+  margin: 0;
+}
+.keyvisual-wrap .kv-main.el-carousel .el-carousel__arrow {
+  display: none;
+}
+.control-wrap {
+  position: relative;
+  z-index: 99;
+}
+.keyvisual-wrap .control-wrap__indicator {
+  position: absolute;
+  top: auto;
+  bottom: 203px !important;
+}
+.keyvisual-wrap .slideinfo-list__item {
+  padding: 4px;
+}
+/* model- name */
+.model-name {
+  display: none;
+}
+/* quick-menu */
+.keyvisual-wrap .quick-menu {
+  position: absolute;
+  width: auto;
+  height: 177px;
+  z-index: 99;
+}
+.keyvisual-wrap .quick-menu::before {
+  content: "";
+  display: block;
+  width: calc(100% - 30px);
+  height: 1px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.1);
+}
+.keyvisual-wrap .quick-menu .el-carousel__item {
+  position: static;
+  overflow-x: auto;
+  padding: 20px 0 0 7px;
+  height: 177px;
+}
+.keyvisual-wrap .quick-menu .el-carousel__item .items-wrap {
+  width: 129vw;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+.keyvisual-wrap .quick-menu .el-carousel__item .items-wrap li {
+  width: 21.5vw;
+  float: left;
+  margin-bottom: 65px;
+}
+.keyvisual-wrap .quick-menu .el-carousel__item .items-wrap li a {
+  padding-top: 0;
+  font-size: 12px;
+}
+.keyvisual-wrap .quick-menu .el-carousel__item .items-wrap li a::before {
+  position: static;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 10px;
+}
+.keyvisual-wrap .quick-menu .el-carousel .el-carousel__indicators {
+  display: none;
+}
+/* section1 */
+.content {
+  padding: 0 0 50px;
+}
+.contant-area .container .content-wrap .content .section-wrap:nth-child(2) {
+  padding: 63px 0 0;
+}
+.content .section-wrap.common {
+  padding-top: 70px !important;
+}
+
+.content .section-wrap.common > .title {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 35px;
+  letter-spacing: -0.4px;
+}
+.content .section-wrap.common > .tit-tail {
+  margin: 12px 0 0;
+  font-size: 12px;
+  letter-spacing: -0.4px;
+  color: #666 !important;
+  line-height: 22px;
+}
+.section-wrap .model-wrap .control-wrap__indicator {
+  position: relative;
+  left: 0;
+  top: 0;
+  margin: 0 auto;
+  z-index: 5;
+}
+.section-wrap .model-wrap .tab.sp-loc .tab-menu {
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.tab-menu ul {
+  list-style: none;
+}
+.tab-menu li > a,
+.tab-menu li > button,
+.tab-menu ul {
+  display: flex;
+}
+[class*="tab sp-loc"] .tab-menu {
+  justify-content: space-between;
+}
+[class*="tab sp"] .tab-menu {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  -webkit-box-align: center;
+}
+[class*="tab sp"] .tab-menu > ul {
+  flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+[class*="tab sp-loc"] .tab-menu li > a,
+[class*="tab sp-loc"] .tab-menu li > button {
+  font-weight: 400;
+  height: 16px;
+  font-size: 16px;
+  letter-spacing: 0.016px;
+  color: #666;
+  line-height: 100%;
+  background: none;
+  line-height: 1;
+}
+.sp-loc .tab-menu li {
+  margin: 0 10px;
+}
+.sp-loc .tab-menu li > button {
+  padding: 0;
+}
+.tab-menu li > button {
+  font-size: 15px;
+  letter-spacing: 0.016px;
+  line-height: 100%;
+}
+.section-wrap .model-wrap .control-wrap__indicator .slideinfo-list__link {
+  font-size: 15px;
+  letter-spacing: 0.016px;
+  color: #666;
+  line-height: 100%;
+  font-weight: 600;
+}
+.section-wrap .el-carousel__arrow {
+  display: none !important;
+}
+.section-wrap .model-wrap .box-list-slide .el-carousel__groups {
+  width: calc(100% - 30px);
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__groups
+  .el-carousel__unit
+  .link
+  img {
+  width: 100% !important;
+}
+.section-wrap
+  .model-wrap
+  .box-list-slide
+  .el-carousel__groups
+  .el-carousel__unit
+  .link
+  .txt-wrap {
+  width: 100%;
+}
+/* section02 =========================================================================== */
+.contant-area .container .content-wrap .content .section-wrap:nth-child(3) {
+  padding: 70px 0 0 !important;
+}
+.content .section-wrap.common .section-body {
+  margin-top: 30px;
+  padding: 0 15px;
+}
+.electric-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 40px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.electric-car {
+  width: 100%;
+  padding: 0;
+  background: #f6f3f2;
+}
+.electric-car-kv {
+  width: 100%;
+}
+.electric-car-kv .thumb {
+  overflow: hidden;
+  font-size: 0;
+}
+.electric-car-kv .thumb img {
+  width: 100%;
+}
+.electric-car-head {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 18px 15px 40px;
+  text-align: left;
+}
+
+.electric-car-head.white .tit {
+  font-family: "HyundaiSansHead", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 44px;
+  letter-spacing: -0.4px;
+  color: #000 !important;
+}
+.electric-car-head.white .desc {
+  font-size: 13px;
+  margin-top: 0;
+  color: #666 !important;
+}
+.electric-car-head.white .btn {
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  text-align: center;
+  background: #002c5f;
+  font-size: 13px;
+  line-height: 40px;
+}
+
+.electric-car-info {
+  border-top: 1px solid #e4dcd3;
+  margin: 0 15px;
+  padding: 37px 0 40px;
+  background: #f6f3f2;
+  text-align: left;
+}
+.electric-car-info .tit {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: bolder;
+}
+.electric-car-info .desc {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: bolder;
+}
+.electric-car-info .link-lists {
+  flex-wrap: wrap;
+  margin-top: 20px;
+  width: 50%;
+}
+.electric-car-info .link-lists > li:last-child {
+  width: 100%;
+  margin: 20px 0 0;
+  padding-left: 0;
+}
+.electric-car-info .link-lists > li .btn {
+  font-family: "HyundaiSansHead";
+  font-weight: 700;
+  font-size: 13px;
+  font-weight: bolder;
+}
+.btn[class*="btn-more"]:after,
+a.btn[class*="btn-more"]:after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 0 1px 1px 0;
+  transform: translateY(-10%) rotate(-45deg);
+  margin-left: 6px;
+  border-color: inherit;
+}
+.electric-car-info::after {
+  right: 15px;
+  bottom: 40px;
+  width: 120px;
+  height: 60px;
+  background-size: 120px auto;
+}
+.electric-carousel {
+  overflow-x: scroll;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+/* foot-area */
+.foot-area {
+  z-index: 0;
+}

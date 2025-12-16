@@ -643,3 +643,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(footer);
 });
+
+// mobile =========================================
+document.addEventListener("DOMContentLoaded", () => {
+  const tapArea = document.querySelector(".tap-area");
+  const innerWrap = document.querySelector(".inner_wrap");
+  const gnbWrap = document.querySelector(".gnb_wrap");
+
+  const topArea = innerWrap.querySelector(".top-area");
+
+  function toMobile() {
+    if (tapArea.classList.contains("is-mobile")) return;
+
+    tapArea.classList.add("is-mobile");
+
+    topArea.classList.add("top-mobile-area");
+
+    if (!innerWrap.querySelector(".m-search--mobile")) {
+      const form = document.createElement("form");
+      form.className = "m-search m-search--mobile";
+      innerWrap.insertBefore(form, gnbWrap);
+    }
+
+    gnbWrap.style.display = "none";
+  }
+
+  function toPC() {
+    tapArea.classList.remove("is-mobile");
+
+    topArea.classList.remove("top-mobile-area");
+
+    innerWrap.querySelector(".m-search--mobile")?.remove();
+
+    gnbWrap.style.display = "";
+  }
+
+  function checkViewport() {
+    if (window.innerWidth <= 767) {
+      toMobile();
+    } else {
+      toPC();
+    }
+  }
+
+  window.addEventListener("resize", checkViewport);
+  checkViewport();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const BREAKPOINT = 767;
+  const carousel = document.querySelector(".quick-menu .el-carousel");
+
+  let isMobile = false;
+  let originalHTML = carousel.innerHTML;
+
+  function toMobile() {
+    if (isMobile) return;
+    isMobile = true;
+
+    const items = carousel.querySelectorAll(".menu-icon");
+    const firstItem = carousel.querySelector(".el-carousel__item");
+    const itemsWrap = firstItem.querySelector(".items-wrap");
+
+    itemsWrap.innerHTML = "";
+    items.forEach((li) => itemsWrap.appendChild(li));
+
+    carousel
+      .querySelectorAll(
+        ".el-carousel__item:not(:first-child), .el-carousel__arrow, .el-carousel__indicators"
+      )
+      .forEach((el) => el.remove());
+  }
+
+  function toPC() {
+    if (!isMobile) return;
+    isMobile = false;
+
+    carousel.innerHTML = originalHTML;
+  }
+
+  function check() {
+    window.innerWidth <= BREAKPOINT ? toMobile() : toPC();
+  }
+
+  window.addEventListener("resize", check);
+  check();
+});
