@@ -1,4 +1,4 @@
-// gsap 연결
+// gsap , lensis 연결 ======================================================
 gsap.registerPlugin(ScrollTrigger);
 
 const lenis = new Lenis({
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     li.addEventListener("click", () => updateElectric(i));
   });
 });
-//  Tab ============================================================
+//  Tab1 ============================================================
 document.addEventListener("DOMContentLoaded", () => {
   const modelData = {
     all: [
@@ -320,7 +320,254 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-// scroll ===========================================================
+//  Tab2 ============================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const newsData = {
+    all: [
+      {
+        img: "images/hqdefault_1.jpg",
+        title:
+          "[현대자동차 x 이찬혁] The Snowish Man (더스노우위시맨)│Main Film│현대자동차",
+      },
+      {
+        img: "images/hqdefault_2.jpg",
+        title:
+          "2025 세계 장애인의 날, 조금 특별한 기상예보 | X-ble MEX | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_3.jpg",
+        title:
+          "[현대자동차 x 이찬혁] ‘We wish’ (The Snowish Man OST) | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_4.jpg",
+        title:
+          "[현대 SUV x 이명화] 당신을 아끼는 잔소리 처럼, 당신을 지키는 현대 SUV – 코나 편 | 현대자동차",
+      },
+    ],
+
+    bluelink: [
+      {
+        img: "images/hqdefault_5.jpg",
+        title: "Bluelink Store | 블루링크 스토어 런칭 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_6.jpg",
+        title: "Bluelink Store | 블루링크 스토어 사용 설명서 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_7.jpg",
+        title:
+          "마이현대 | 하나로 통합된 현대자동차 공식 앱 - 국내 서비스 오픈 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_8.jpg",
+        title: "IONIQ | 알면 알수록 더 안심되니까 | 현대자동차",
+      },
+    ],
+    firstcar: [
+      {
+        img: "images/hqdefault_9.jpg",
+        title:
+          "후회 없는 첫 차 선택, 이걸 알아야 진짜 아낀다?! | 현대로운 탐구생활 시즌 2 | 현대자동차",
+      },
+      {
+        img: "",
+        title: "",
+      },
+      {
+        img: "",
+        title: "",
+      },
+      {
+        img: "",
+        title: "",
+      },
+    ],
+    hyundaishop: [
+      {
+        img: "images/hqdefault_10.jpg",
+        title: "‘센스’가 필요할 땐, 현대샵에서 l 현대자동차",
+      },
+      {
+        img: "images/hqdefault_11.jpg",
+        title:
+          "타고만 다니기 아까운 차, 200% 활용법 알아보기 | 현대로운 탐구생활 시즌 2 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_12.jpg",
+        title: "‘집밥’이 필요할 땐, 현대샵에서 l 현대자동차",
+      },
+      {
+        img: "images/hqdefault_13.jpg",
+        title: "‘정리’가 필요할 땐, 현대샵에서 l 현대자동차",
+      },
+    ],
+    jannabi: [
+      {
+        img: "images/hqdefault_14.jpg",
+        title:
+          "‘아름다운 꿈’ by 잔나비 JANNABI (반짝이는 우정 레이싱 ver.) | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_15.jpg",
+        title:
+          "'아름다운 꿈' by 잔나비 JANNABI – Visualizer MV Teaser | 현대자동차",
+      },
+      {
+        img: "",
+        title: "",
+      },
+      {
+        img: "",
+        title: "",
+      },
+    ],
+    hyundaicar: [
+      {
+        img: "images/hqdefault_1.jpg",
+        title:
+          "[현대자동차 x 이찬혁] The Snowish Man (더스노우위시맨)│Main Film│현대자동차",
+      },
+      {
+        img: "images/hqdefault_2.jpg",
+        title:
+          "2025 세계 장애인의 날, 조금 특별한 기상예보 | X-ble MEX | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_3.jpg",
+        title:
+          "[현대자동차 x 이찬혁] ‘We wish’ (The Snowish Man OST) | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_16.jpg",
+        title:
+          "[현대 SUV x 이명화] 당신을 아끼는 잔소리 처럼, 당신을 지키는 현대 SUV – 코나 편 | 현대자동차",
+      },
+    ],
+    hyundai: [
+      {
+        img: "images/hqdefault_17.jpg",
+        title: "2025 인제 월드 투어링 카 페스티벌 l 현대자동차",
+      },
+      {
+        img: "images/hqdefault_18.jpg",
+        title:
+          "현대 N 10주년 기념 필름 - 당신이 있어 N이 있습니다 l 현대자동차",
+      },
+      {
+        img: "images/hqdefault_19.jpg",
+        title: "IONIQ 6 N 월드 프리미어 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_20.jpg",
+        title: "아이오닉 6 N 티저ㅣ현대자동차",
+      },
+    ],
+    about: [
+      {
+        img: "images/hqdefault_21.jpg",
+        title: "NEXO의 러브콜에 유재석 님의 화답이 도착했습니다.ㅣ현대자동차",
+      },
+      {
+        img: "images/hqdefault_22.jpg",
+        title: "2025 서울모빌리티쇼 현대자동차관 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_23.jpg",
+        title: "The Great Journey, 수소로 움직이는 세상 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_24.jpg",
+        title: "2024 Hyundai Big Town 현장 스케치ㅣ현대자동차",
+      },
+    ],
+    insteroid: [
+      {
+        img: "images/hqdefault_25.jpg",
+        title: "현대자동차 x JDM: Japanese Drift Master 메인 필름 l 현대자동차",
+      },
+      {
+        img: "images/hqdefault_26.jpg",
+        title: "현대자동차 x JDM: Japanese Drift Master 티저 l 현대자동차",
+      },
+      {
+        img: "",
+        title: "",
+      },
+      {
+        img: "",
+        title: "",
+      },
+    ],
+    ioniq: [
+      {
+        img: "images/hqdefault_27.jpg",
+        title: "제 1회 현대차력쇼 : 차능력자를 찾습니다 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_11.jpg",
+        title:
+          "타고만 다니기 아까운 차, 200% 활용법 알아보기 | 현대로운 탐구생활 시즌 2 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_19.jpg",
+        title: "IONIQ 6 N 월드 프리미어 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_28.jpg",
+        title: "First glance at IONIQ 6 N | 현대자동차",
+      },
+    ],
+    ev: [
+      {
+        img: "images/hqdefault_29.jpg",
+        title: "2025 코나 일렉트릭 트림, 옵션, 가격 완벽 정리 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_30.jpg",
+        title: "더 뉴 아이오닉 6 트림, 옵션, 가격 완벽 정리 | 현대자동차",
+      },
+      {
+        img: "images/hqdefault_31.jpg",
+        title: "넥쏘 편의사양 및 파워트레인 알아보기 I 현대자동차",
+      },
+      {
+        img: "images/hqdefault_21.jpg",
+        title: "NEXO의 러브콜에 유재석 님의 화답이 도착했습니다.ㅣ현대자동차",
+      },
+    ],
+  };
+  const tagButtons = document.querySelectorAll(".btn-tag");
+  const boxNewsList = document.querySelectorAll(".box-news");
+
+  tagButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.key;
+
+      document.querySelectorAll(".tag").forEach((tag) => {
+        tag.classList.remove("select");
+      });
+      btn.querySelector(".tag").classList.add("select");
+
+      boxNewsList.forEach((box, index) => {
+        const data = newsData[key][index];
+        const imgWrap = box.querySelector(".img-wrap");
+        const descText = box.querySelector(".box-desc-text");
+
+        if (!data || !data.img) {
+          box.style.display = "none";
+          return;
+        }
+
+        box.style.display = "block";
+        imgWrap.style.backgroundImage = `url(${data.img})`;
+        descText.textContent = data.title;
+      });
+    });
+  });
+});
+// scroll events =================================================================
 $(".item-util")
   .has(".lang-select")
   .hover(
@@ -345,7 +592,7 @@ $(".item-util")
       $(".header").removeClass("isBgWhite");
     }
   );
-// header & nav_bar
+// scroll events - header / nav_bar ==========================================================
 window.addEventListener("scroll", () => {
   const header = document.querySelector(".header");
   const navBar = document.querySelector(".nav_bar");
@@ -368,4 +615,31 @@ window.addEventListener("scroll", () => {
   }
 
   navBar.style.width = `${progressWidth}%`;
+});
+
+// scroll events - footer / area-floating ==========================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const floating = document.querySelector(".area-floating");
+  const footer = document.querySelector("#footer");
+
+  if (!floating || !footer) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          floating.classList.add("mode-footer-show");
+        } else {
+          floating.classList.remove("mode-footer-show");
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: "0px 0px -100px 0px",
+    }
+  );
+
+  observer.observe(footer);
 });
