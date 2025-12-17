@@ -166,8 +166,11 @@ a.btn[class*="btn-md"] {
 .el-carousel {
   position: relative;
   overflow-x: hidden;
+}
+.el-carousel--solo {
   overflow-y: hidden;
 }
+
 .btn-circle {
   position: relative;
   width: 60px;
@@ -195,6 +198,12 @@ a.btn[class*="btn-md"] {
 }
 .pc-br {
   display: block;
+}
+.pc-img {
+  display: block !important;
+}
+.m-img {
+  display: none !important;
 }
 /* Layout */
 /* Section */
@@ -883,6 +892,7 @@ svg:not(:root) {
 }
 .el-carousel__item.is-animating {
   transition: transform 0.4s ease-in-out, -webkit-transform 0.4s ease-in-out;
+  z-index: -1;
 }
 
 .keyvisual-wrap .el-carousel__groups,
@@ -909,6 +919,9 @@ svg:not(:root) {
   max-width: 2560px;
   margin: 0 auto;
   -webkit-box-align: center;
+}
+.keyvisual-wrap .el-carousel__groups .fluid-container {
+  background: url(images/car-bg-w.avif) center top / auto 100% no-repeat;
 }
 .keyvisual-wrap .el-carousel__groups .fluid-container .txt-wrap {
   position: absolute;
@@ -1016,6 +1029,7 @@ a.btn::before {
 .el-carousel--v2 .el-carousel__arrow.el-carousel__arrow--custom {
   display: inline-block;
 }
+
 .keyvisual-wrap .kv-main.el-carousel .el-carousel__arrow {
   width: 40px;
   height: 70px;
@@ -1327,6 +1341,13 @@ a.btn::before {
 .el-icon-arrow-right::before {
   content: "❯";
 }
+.el-carousel__indicator {
+  display: inline-block;
+  background-color: transparent;
+  padding: 12px 4px;
+  cursor: pointer;
+  margin-right: 4px;
+}
 .el-carousel__indicators {
   position: absolute;
   bottom: 0;
@@ -1334,6 +1355,16 @@ a.btn::before {
   transform: translateX(-50%);
   padding: 0;
   z-index: 2;
+}
+.el-carousel__indicators {
+  margin: 20px 0;
+}
+.el-carousel__indicators--outside {
+  position: static;
+  text-align: center;
+  transform: none;
+  bottom: 26px;
+  z-index: 99;
 }
 .keyvisual-wrap .quick-menu .el-carousel .el-carousel__indicators {
   display: flex;
@@ -1399,7 +1430,9 @@ a.btn::before {
   height: 2px;
   background-color: #fff;
   border: none;
+  cursor: pointer;
   transition: 0.3s;
+  outline: none;
 }
 .el-carousel__indicator.is-active button {
   opacity: 1;
@@ -1418,6 +1451,19 @@ a.btn::before {
 .customer-status-wrap {
   background-color: #e4dcd3;
 }
+.el-carousel__indicator .el-carousel__button {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: transparent;
+  opacity: 1;
+  font-size: 0;
+  overflow: hidden;
+}
+.el-carousel__indicator.is-active .el-carousel__button {
+  background-color: #007fa8;
+}
 .section-wrap:nth-child(2) {
   max-width: 1400px;
   margin: 0 auto;
@@ -1427,19 +1473,9 @@ a.btn::before {
   padding-top: 140px;
   text-align: center;
 }
-.content .section-wrap.common > .title {
-  font-family: "HyundaiSansHead", sans-serif;
-  font-size: 44px;
-  font-weight: 400;
-  line-height: 58px;
-  letter-spacing: -0.4px;
-}
+
 .content .section-wrap.common > .tit-tail {
-  margin: 30px 0 0;
-  font-size: 14px;
-  letter-spacing: -0.24px;
-  color: #666 !important;
-  line-height: 34px;
+  color: #666;
 }
 .section-wrap .model-wrap {
   position: relative;
@@ -1499,7 +1535,7 @@ a.btn::before {
 .section-wrap
   .model-wrap
   .control-wrap__indicator
-  .slideinfo-list__link.is-active {
+  .slideinfo-list__link.is-tab-active {
   color: #007fa8;
 }
 /* box-list-slide */
@@ -1736,9 +1772,6 @@ a.btn::before {
   background: #f5f5f5;
 }
 
-.electric-lists {
-  height: 100%;
-}
 .electric-carousel .el-carousel__unit {
   width: 100%;
 }
@@ -1884,22 +1917,15 @@ a.btn::before {
   vertical-align: top;
 }
 /* section04 =========================================================================== */
-.contant-area .container .content-wrap .content .section-wrap:nth-child(5) {
+.section-wrap:nth-child(5) {
   margin: 0 auto;
-  text-align: center;
+  padding: 140px 0 0;
+}
+.content .section-wrap:nth-child(5).common {
   padding-top: 140px;
+  text-align: center;
 }
 
-.contant-area
-  .container
-  .content-wrap
-  .content
-  .section-wrap:nth-child(5).common
-  .section-body {
-  max-width: 1180px;
-  margin: 60px auto 0;
-  padding: 0 30px;
-}
 .section-wrap .story-list {
   display: flex;
   flex-wrap: nowrap;
@@ -2074,17 +2100,8 @@ a.btn::before {
   display: block;
   color: #fff;
   font-size: 0;
-  position: relative;
 }
-.brand .list > li .link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 1;
-}
+
 .brand .list > li .link img {
   width: 100%;
   height: auto;
@@ -2132,22 +2149,8 @@ a.btn::before {
   font-weight: 900;
 }
 /* section -events ======================================================== */
-.content .section-wrap.common .section-body.wide {
-  max-width: 1700px;
-}
-.section-wrap.events .el-carousel__arrow {
-  top: 9.5vw;
-}
-.section-wrap.events .el-carousel__groups {
-  display: grid;
-  grid-template-columns: repeat(3, 31.71333%);
-  gap: 2.43%;
-}
-.section-wrap.events .el-carousel__unit {
-  text-align: left;
-  -webkit-box-flex: 1;
-}
-.section-wrap.events .el-carousel__unit > a {
+
+.events .el-carousel__unit > a {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -2234,6 +2237,9 @@ a.btn::before {
 }
 .date:first-child {
   margin-right: 35px;
+}
+.section-wrap.events .el-carousel__unit .btn.btn-more-blue {
+  display: none;
 }
 /* section- 현대자동차 소식 =====================================================================  */
 .section-wrap.common.news > .title {
@@ -2884,6 +2890,61 @@ a.btn[class*="btn-external"].btn-external-sm::after {
   .electric-carousel {
     width: 352px;
   }
+  .content .section-wrap.common > .title {
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 58px;
+    letter-spacing: -0.4px;
+  }
+  .content .section-wrap.common > .tit-tail {
+    margin: 30px 0 0;
+    font-size: 14px;
+    letter-spacing: -0.24px;
+    line-height: 34px;
+  }
+  .electric-lists {
+    height: 100%;
+  }
+  .contant-area
+    .container
+    .content-wrap
+    .content
+    .section-wrap:nth-child(5).common
+    .section-body {
+    max-width: 1180px;
+    margin: 60px auto 0;
+    padding: 0 30px;
+  }
+  .content .section-wrap.common .section-body.wide {
+    max-width: 1700px;
+  }
+  .events .el-carousel__groups {
+    display: grid;
+    grid-template-columns: repeat(3, 31.71333%);
+    gap: 2.43%;
+  }
+  .events .el-carousel__unit {
+    text-align: left;
+  }
+  .brand .list > li .link .pc-img {
+    width: 100%;
+    height: auto;
+  }
+  .el-carousel--solo .el-carousel__arrow--custom {
+    display: none;
+  }
+  .section-wrap.events .el-carousel__arrow {
+    top: 9.5vw;
+  }
+  .brand .list > li .link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+  }
 }
 @media screen and (max-width: 1024px) {
   .keyvisual-wrap .el-carousel.kv-main .el-carousel__container {
@@ -2924,16 +2985,61 @@ a.btn[class*="btn-external"].btn-external-sm::after {
   .keyvisual-wrap .control-wrap__indicator {
     bottom: 140px;
   }
+  .brand .el-carousel {
+    margin: 51px 0 0;
+  }
+  .brand .el-carousel .el-carousel__container {
+    position: static;
+  }
+  .brand .el-carousel__layer {
+    position: relative;
+  }
+  .brand .el-carousel__item {
+    width: 100%;
+    height: 100%;
+    /* position: relative; */
+  }
+  .brand .el-carousel__unit {
+    width: 50%;
+  }
+  .brand .list > li .link {
+    color: #000;
+  }
+
+  .brand .list > li .link .txt-wrap {
+    position: static;
+    max-width: 405px;
+    margin-top: 0;
+    padding: 0;
+    text-align: left;
+    color: #000;
+    opacity: 1;
+  }
+  .brand .list > li .link .txt-wrap .tit {
+    margin-top: 15px;
+  }
+  .brand .list > li .link .m-img {
+    width: 100%;
+    height: auto;
+  }
+  .section-wrap.events .el-carousel__arrow {
+    top: 13vw;
+  }
+  .section-wrap.events .el-carousel__groups {
+    display: grid;
+    grid-template-columns: repeat(2, calc(50% - 15px));
+    gap: 30px;
+  }
 }
 @media screen and (max-width: 1200px) {
-  .section-wrap {
+  .contant-area .container .content-wrap .content .section-wrap:nth-child(2) {
     padding: 140px 32px 0;
   }
   .section-wrap .model-wrap {
     margin: 35px 0 0;
     min-width: auto;
   }
-  .section-wrap .model-wrap .box-list-slide {
+  .section-wrap:nth-child(2) .model-wrap .box-list-slide {
     margin: 30px 0 0;
   }
   .section-wrap .model-wrap .tab.sp-loc .tab-menu > ul > li:first-child {
@@ -2954,9 +3060,22 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     left: -11px;
     top: 2px;
   }
-  .section-wrap .model-wrap .box-list-slide .el-carousel__groups {
-    display: block;
+  .section-wrap
+    .model-wrap
+    .tab.sp-loc
+    .tab-menu
+    > ul
+    > li:first-child::before {
+    display: none;
+  }
+  .section-wrap .model-wrap .tab.sp-loc .tab-menu {
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+  }
+  .section-wrap:nth-child(2) .model-wrap .box-list-slide .el-carousel__groups {
     width: 100%;
+    display: block;
   }
   .section-wrap
     .model-wrap
@@ -2972,6 +3091,14 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     .el-carousel__unit
     .link {
     display: block;
+  }
+  .section-wrap
+    .model-wrap
+    .box-list-slide
+    .el-carousel__item
+    li.el-carousel__unit:first-child
+    .link::before {
+    display: none !important;
   }
   .section-wrap
     .model-wrap
@@ -3004,8 +3131,49 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     font-size: 20px !important;
     line-height: 1 !important;
   }
-  .section-wrap,
-  .section-wrap .section-body {
+  .section-wrap
+    .model-wrap
+    .box-list-slide
+    .el-carousel__container
+    .el-carousel__layer
+    .el-carousel__item:first-child
+    .el-carousel__groups
+    .el-carousel__unit
+    .link::after {
+    content: "1위";
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 42px;
+    height: 42px;
+    background: #007fa8;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.24px;
+    color: #fff;
+    line-height: 42px;
+    text-align: center;
+  }
+  .section-wrap:nth-child(2) .el-carousel__indicators {
+    margin-bottom: 0;
+  }
+  .contant-area .container .content-wrap .content .section-wrap:nth-child(3),
+  .contant-area
+    .container
+    .content-wrap
+    .content
+    .section-wrap:nth-child(3)
+    .section-body {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  .contant-area .container .content-wrap .content .section-wrap:nth-child(4),
+  .contant-area
+    .container
+    .content-wrap
+    .content
+    .section-wrap:nth-child(4)
+    .section-body {
     padding-right: 0 !important;
     padding-left: 0 !important;
   }
@@ -3023,5 +3191,28 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     height: 66px;
     background: url(images/main_hi_ev_icon.avif) no-repeat 0 0;
     background-size: 130px auto;
+  }
+  .section-wrap .trendy-hyundai {
+    flex-direction: column-reverse;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+  }
+  .section-wrap .trendy-hyundai__info {
+    padding: 20px 15px 30px;
+  }
+  .section-wrap .trendy-hyundai__info .tit {
+    font-size: 27px;
+  }
+  .section-wrap .trendy-hyundai__info .txt {
+    margin: 7px 0 0;
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .section-wrap .trendy-hyundai__info .btn.btn-md {
+    width: 100%;
+    margin: 25px 0 0;
+  }
+  .section-wrap .trendy-hyundai__img img {
+    width: 100%;
   }
 }

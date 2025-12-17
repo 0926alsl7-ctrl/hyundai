@@ -309,12 +309,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const tabs = document.querySelectorAll(".slideinfo-list__link");
+  const tabs = document.querySelectorAll(
+    ".slideinfo-list .slideinfo-list__link"
+  );
 
   tabs.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      tabs.forEach((el) => el.classList.remove("is-active"));
-      btn.classList.add("is-active");
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      tabs.forEach((el) => el.classList.remove("is-tab-active"));
+      btn.classList.add("is-tab-active");
 
       updateModelRank(btn.dataset.type);
     });
@@ -675,7 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     innerWrap.querySelector(".m-search--mobile")?.remove();
 
-    gnbWrap.style.display = "";
+    gnbWrap.style.display = "flex";
   }
 
   function checkViewport() {
@@ -689,37 +694,37 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", checkViewport);
   checkViewport();
 });
-
+// mobile quick menu =============================================
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
-  const carousel = document.querySelector(".quick-menu .el-carousel");
+  const quickMenu = document.querySelector(".quick-menu");
 
   let isMobile = false;
-  let originalHTML = carousel.innerHTML;
+  const originalHTML = quickMenu.innerHTML;
 
   function toMobile() {
     if (isMobile) return;
     isMobile = true;
 
-    const items = carousel.querySelectorAll(".menu-icon");
-    const firstItem = carousel.querySelector(".el-carousel__item");
-    const itemsWrap = firstItem.querySelector(".items-wrap");
+    const items = quickMenu.querySelectorAll(".menu-icon");
 
-    itemsWrap.innerHTML = "";
-    items.forEach((li) => itemsWrap.appendChild(li));
+    quickMenu.innerHTML = "";
 
-    carousel
-      .querySelectorAll(
-        ".el-carousel__item:not(:first-child), .el-carousel__arrow, .el-carousel__indicators"
-      )
-      .forEach((el) => el.remove());
+    const item = document.createElement("div");
+    item.className = "el-carousel__item";
+
+    const ul = document.createElement("ul");
+    ul.className = "items-wrap";
+
+    items.forEach((li) => ul.appendChild(li));
+    item.appendChild(ul);
+    quickMenu.appendChild(item);
   }
 
   function toPC() {
     if (!isMobile) return;
     isMobile = false;
-
-    carousel.innerHTML = originalHTML;
+    quickMenu.innerHTML = originalHTML;
   }
 
   function check() {
@@ -728,4 +733,192 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("resize", check);
   check();
+});
+// el-carousel__container 높이 계산=================================
+document.addEventListener("DOMContentLoaded", () => {
+  const containers = document.querySelectorAll(".el-carousel__container");
+
+  function setCarouselHeight() {
+    containers.forEach((container) => {
+      const groups = container.querySelector(".el-carousel__groups");
+      if (!groups) return;
+
+      const height = groups.offsetHeight;
+      container.style.height = height + "px";
+    });
+  }
+
+  window.addEventListener("resize", setCarouselHeight);
+  window.addEventListener("load", setCarouselHeight);
+  setCarouselHeight();
+});
+
+// box-list-slide=======================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const BREAKPOINT = 767;
+  const sliders = document.querySelectorAll(".box-list-slide");
+
+  sliders.forEach((slider) => {
+    const container = slider.querySelector(".el-carousel__container");
+    const layer = slider.querySelector(".el-carousel__layer");
+    if (!container || !layer) return;
+
+    const originalHTML = layer.innerHTML;
+    let isMobile = false;
+    let currentIndex = 0;
+
+    const prevBtn = slider.querySelector(".el-carousel__arrow--left");
+    const nextBtn = slider.querySelector(".el-carousel__arrow--right");
+
+    /* ================= 구조 변경 ================= */
+    function toMobile() {
+      if (isMobile) return;
+      isMobile = true;
+
+      const item = layer.querySelector(".el-carousel__item");
+      if (!item) return;
+
+      const units = [...item.querySelectorAll(".el-carousel__unit")];
+      layer.innerHTML = "";
+
+      units.forEach((unit) => {
+        const newItem = document.createElement("div");
+        newItem.className = "el-carousel__item";
+
+        const groups = document.createElement("ul");
+        groups.className = "el-carousel__groups";
+
+        groups.appendChild(unit);
+        newItem.appendChild(groups);
+        layer.appendChild(newItem);
+      });
+
+      currentIndex = 0;
+      createIndicators(layer.children.length);
+      updatePositions();
+      updateButtons();
+    }
+
+    function toPC() {
+      if (!isMobile) return;
+      isMobile = false;
+      layer.innerHTML = originalHTML;
+
+      const ind = slider.querySelector(".el-carousel__indicators");
+      if (ind) ind.remove();
+    }
+
+    /* ================= 이동 ================= */
+    function updatePositions() {
+      const items = layer.querySelectorAll(".el-carousel__item");
+      const width = container.clientWidth;
+
+      items.forEach((item, index) => {
+        const x = (index - currentIndex) * width;
+        item.style.transform = `translateX(${x}px)`;
+        item.classList.toggle("is-animating", index === currentIndex);
+      });
+    }
+
+    function moveTo(index) {
+      const count = layer.children.length;
+
+      if (!slider.classList.contains("is-loop")) {
+        if (index < 0 || index >= count) return;
+      }
+
+      if (index < 0) index = count - 1;
+      if (index >= count) index = 0;
+
+      currentIndex = index;
+      updatePositions();
+      updateIndicators();
+      updateButtons();
+    }
+
+    /* ================= Indicator ================= */
+    function createIndicators(count) {
+      const old = slider.querySelector(".el-carousel__indicators");
+      if (old) old.remove();
+
+      const ul = document.createElement("ul");
+      ul.className = "el-carousel__indicators el-carousel__indicators--outside";
+
+      for (let i = 0; i < count; i++) {
+        const li = document.createElement("li");
+        li.className = "el-carousel__indicator";
+
+        const btn = document.createElement("button");
+        btn.className = "el-carousel__button";
+
+        li.addEventListener("click", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          moveTo(i);
+        });
+
+        li.appendChild(btn);
+        ul.appendChild(li);
+      }
+
+      slider.appendChild(ul);
+      updateIndicators();
+    }
+
+    function updateIndicators() {
+      const dots = slider.querySelectorAll(".el-carousel__indicator");
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("is-active", i === currentIndex);
+      });
+    }
+
+    /* ================= 버튼 ================= */
+    function updateButtons() {
+      if (!prevBtn || !nextBtn) return;
+      if (slider.classList.contains("is-loop")) return;
+
+      const count = layer.children.length;
+      prevBtn.style.display = currentIndex === 0 ? "none" : "";
+      nextBtn.style.display = currentIndex === count - 1 ? "none" : "";
+    }
+
+    prevBtn?.addEventListener("click", () => moveTo(currentIndex - 1));
+    nextBtn?.addEventListener("click", () => moveTo(currentIndex + 1));
+    /* ================= 터치 스와이프 ================= */
+    let startX = 0;
+    let deltaX = 0;
+    let isDragging = false;
+
+    layer.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+
+    layer.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      deltaX = e.touches[0].clientX - startX;
+    });
+
+    layer.addEventListener("touchend", () => {
+      if (!isDragging) return;
+      isDragging = false;
+
+      const threshold = container.clientWidth * 0.2; // 20% 이상 움직이면 전환
+
+      if (deltaX > threshold) {
+        moveTo(currentIndex - 1); // 오른쪽 스와이프 → 이전
+      } else if (deltaX < -threshold) {
+        moveTo(currentIndex + 1); // 왼쪽 스와이프 → 다음
+      }
+
+      deltaX = 0;
+    });
+    /* ================= 반응형 ================= */
+    function check() {
+      window.innerWidth <= BREAKPOINT ? toMobile() : toPC();
+    }
+
+    window.addEventListener("resize", check);
+    check();
+  });
 });
