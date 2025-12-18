@@ -29,7 +29,26 @@ ScrollTrigger.scrollerProxy(document.body, {
     };
   },
 });
-// (1) 메인 swiper ====================================================
+// el-carousel__container 높이 계산  ==================================================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const containers = document.querySelectorAll(".el-carousel__container");
+
+  function setCarouselHeight() {
+    containers.forEach((container) => {
+      const groups = container.querySelector(".el-carousel__groups");
+      if (!groups) return;
+
+      const height = groups.offsetHeight;
+      container.style.height = height + "px";
+    });
+  }
+
+  window.addEventListener("resize", setCarouselHeight);
+  window.addEventListener("load", setCarouselHeight);
+  setCarouselHeight();
+});
+
+// (1) 메인 swiper ================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector(".kv-main");
   if (!main) return;
@@ -46,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const indicatorWrap = document.querySelector(
     ".keyvisual-wrap .slideinfo-list"
   );
+
   const toggleBtn = document.querySelector(
     ".keyvisual-wrap .btn-control--toggle"
   );
@@ -140,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startAutoPlay();
 });
 
-// (2) quick-menu swiper ====================================================
+// (2) quick-menu swiper =============================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const quick = document.querySelector(".quick-menu");
   if (!quick) return;
@@ -207,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateQuickMenu(0, false);
 });
-// (3) electric swiper ================================================
+// (3) electric swiper =================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const electric = document.querySelector(".electric-carousel");
   if (!electric) return;
@@ -266,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
     li.addEventListener("click", () => updateElectric(i));
   });
 });
-//  Tab1 ============================================================
+// (4) Tab1 ==============================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const modelData = {
     all: [
@@ -325,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-//  Tab2 ============================================================
+// (5) Tab2 ==============================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const newsData = {
     all: [
@@ -572,7 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-// scroll events =================================================================
+// (6) scroll events ================================================================================================
 $(".item-util")
   .has(".lang-select")
   .hover(
@@ -597,7 +617,7 @@ $(".item-util")
       $(".header").removeClass("isBgWhite");
     }
   );
-// scroll events - header / nav_bar ==========================================================
+// scroll events =>  header / nav_bar ==========================================================
 window.addEventListener("scroll", () => {
   const header = document.querySelector(".header");
   const navBar = document.querySelector(".nav_bar");
@@ -622,7 +642,7 @@ window.addEventListener("scroll", () => {
   navBar.style.width = `${progressWidth}%`;
 });
 
-// scroll events - footer / area-floating ==========================================================
+// scroll events =>  footer / area-floating ==========================================================
 document.addEventListener("DOMContentLoaded", () => {
   const floating = document.querySelector(".area-floating");
   const footer = document.querySelector("#footer");
@@ -649,38 +669,21 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(footer);
 });
 
-// mobile =========================================
+// (7) mobile 구조변경 - tab area ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const tapArea = document.querySelector(".tap-area");
   const innerWrap = document.querySelector(".inner_wrap");
-  const gnbWrap = document.querySelector(".gnb_wrap");
-
   const topArea = innerWrap.querySelector(".top-area");
 
   function toMobile() {
     if (tapArea.classList.contains("is-mobile")) return;
-
     tapArea.classList.add("is-mobile");
-
     topArea.classList.add("top-mobile-area");
-
-    if (!innerWrap.querySelector(".m-search--mobile")) {
-      const form = document.createElement("form");
-      form.className = "m-search m-search--mobile";
-      innerWrap.insertBefore(form, gnbWrap);
-    }
-
-    gnbWrap.style.display = "none";
   }
 
   function toPC() {
     tapArea.classList.remove("is-mobile");
-
     topArea.classList.remove("top-mobile-area");
-
-    innerWrap.querySelector(".m-search--mobile")?.remove();
-
-    gnbWrap.style.display = "flex";
   }
 
   function checkViewport() {
@@ -694,7 +697,126 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", checkViewport);
   checkViewport();
 });
-// mobile quick menu =============================================
+// =================moibile controlloer >>> search ==================================
+const mobileSearchOpen = document.querySelector(
+  ".mobile-controller .search-btn"
+);
+const mobileSearchForm = document.querySelector(".m-search");
+const header = document.querySelector(".header");
+
+const dimmed = document.querySelector(".dimmed");
+mobileSearchOpen.addEventListener("click", () => {
+  mobileSearchForm.classList.toggle("on");
+  dimmed.classList.toggle("show");
+  header.classList.toggle("isSearch");
+});
+
+const tabItems = document.querySelectorAll(".m-search__tab .tab-menu__icon");
+const tabLists = document.querySelectorAll(".m-tab__list");
+
+tabItems.forEach((item, index) => {
+  item.addEventListener("click", () => {
+    tabItems.forEach((i) => {
+      i.classList.remove("active");
+      i.querySelector("button").classList.remove("active");
+    });
+    tabLists.forEach((list) => list.classList.remove("show"));
+
+    item.classList.add("active");
+    item.querySelector("button").classList.add("active");
+    tabLists[index].classList.add("show");
+  });
+});
+// =================moibile controlloer >>> menu ==================================
+// const mobileMenuLogo = document.querySelector(".header .logo svg");
+// const mobileNavBar = document.querySelector(".nav_bar");
+// // const headerIsOpen = document.querySelector(".header");
+
+// mobileMenuOpen.addEventListener("click", () => {
+//   mobileMenuOpenIcon.classList.toggle("is-active");
+//   dimmed.classList.toggle("show");
+//   mobileNavBar.classList.toggle("is-hidden");
+//   mobileMenuLogo.classList.toggle("color-white");
+//   header.classList.toggle("isOpen");
+// });
+const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
+
+mobileMenuOpen.addEventListener("click", () => {
+  const header = document.querySelector(".header");
+  const mobileMenuOpenIcon = mobileMenuOpen.querySelector(".menu-ico");
+  const mobileMenuLogo = document.querySelector(".header .logo svg");
+  const mobileNavBar = document.querySelector(".nav_bar");
+  const dimmed = document.querySelector(".dimmed");
+
+  mobileMenuOpenIcon.classList.toggle("is-active");
+  mobileNavBar.classList.toggle("is-hidden");
+  mobileMenuLogo.classList.toggle("color-white");
+  dimmed.classList.toggle("show");
+  header.classList.toggle("isOpen");
+});
+// (7) mobile 구조변경 - gnb_wrap item- util
+document.addEventListener("DOMContentLoaded", () => {
+  const util = document.querySelector(".util_wrap .util");
+
+  function toMobile() {
+    const util = document.querySelector(".util_wrap .util");
+    util.innerHTML = "";
+
+    // (1) 개인 로그인
+    const item1 = document.createElement("div");
+    item1.className = "item-util";
+
+    const login1 = document.createElement("a");
+    login1.className = "btn-login";
+    login1.href = "#";
+    login1.textContent = "개인 로그인";
+
+    item1.appendChild(login1);
+
+    // (2) 법인 로그인
+    const item2 = document.createElement("div");
+    item2.className = "item-util";
+
+    const login2 = document.createElement("a");
+    login2.className = "btn-login";
+    login2.href = "#";
+    login2.textContent = "법인 로그인";
+
+    item2.appendChild(login2);
+
+    // (3) 언어 선택 (자식 요소 포함)
+    const item3 = document.createElement("div");
+    item3.className = "item-util";
+
+    const langBtn = document.createElement("button");
+    langBtn.className = "lang-select";
+    langBtn.textContent = "KR";
+
+    const langWrap = document.createElement("div");
+    langWrap.className = "lang_wrap";
+
+    const ul = document.createElement("ul");
+
+    ["EN", "CN", "JP"].forEach((text) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "#";
+      a.textContent = text;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    langWrap.appendChild(ul);
+    item3.append(langBtn, langWrap);
+
+    util.append(item1, item2, item3);
+  }
+
+  window.addEventListener("resize", checkViewport);
+  checkViewport();
+});
+
+// (7) mobile 구조변경 - quick-menu ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
   const quickMenu = document.querySelector(".quick-menu");
@@ -734,26 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", check);
   check();
 });
-// el-carousel__container 높이 계산=================================
-document.addEventListener("DOMContentLoaded", () => {
-  const containers = document.querySelectorAll(".el-carousel__container");
-
-  function setCarouselHeight() {
-    containers.forEach((container) => {
-      const groups = container.querySelector(".el-carousel__groups");
-      if (!groups) return;
-
-      const height = groups.offsetHeight;
-      container.style.height = height + "px";
-    });
-  }
-
-  window.addEventListener("resize", setCarouselHeight);
-  window.addEventListener("load", setCarouselHeight);
-  setCarouselHeight();
-});
-
-// box-list-slide=======================================================
+// (7) mobile 구조변경 - box-list-slide ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
   const sliders = document.querySelectorAll(".box-list-slide");
@@ -770,7 +873,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = slider.querySelector(".el-carousel__arrow--left");
     const nextBtn = slider.querySelector(".el-carousel__arrow--right");
 
-    /* ================= 구조 변경 ================= */
     function toMobile() {
       if (isMobile) return;
       isMobile = true;
@@ -921,4 +1023,67 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", check);
     check();
   });
+});
+// (7) mobile 구조변경 - electric section ==================================================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const BREAKPOINT = 767;
+
+  function transformElectricCarousel() {
+    if (window.innerWidth > BREAKPOINT) return;
+
+    document.querySelectorAll(".electric-carousel").forEach((carousel) => {
+      const oldList = carousel.querySelector(".electric-lists");
+      if (!oldList) return;
+
+      const boxes = oldList.querySelectorAll(".electric-box");
+      if (!boxes.length) return;
+
+      const newUl = document.createElement("ul");
+      newUl.className = "electric-lists";
+
+      boxes.forEach((box) => {
+        const li = document.createElement("li");
+        li.className = "electric-item";
+
+        li.appendChild(box);
+        newUl.appendChild(li);
+      });
+
+      oldList.remove();
+
+      carousel.appendChild(newUl);
+    });
+  }
+
+  transformElectricCarousel();
+});
+// (8) footer 버튼 토글 ==========================================================================
+const footerToggleBtn = document.querySelector(
+  ".wrap-footer .wrap-menu-toggle .area-icon"
+);
+const companyMenu = document.querySelector(
+  ".wrap-footer .menu-list-company.pc-toggle"
+);
+const mobileToggleBtn = document.querySelector(
+  ".wrap-footer .wrap-menu-toggle .button-toggle"
+);
+const mobileMenuWrap = document.querySelector(".wrap-footer .wrap-menu-toggle");
+
+footerToggleBtn.addEventListener("click", () => {
+  footerToggleBtn.classList.toggle("pc-on");
+  companyMenu.classList.toggle("on");
+});
+
+mobileToggleBtn.addEventListener("click", () => {
+  mobileToggleBtn.classList.toggle("on");
+  mobileMenuWrap.classList.toggle("on");
+});
+
+const familyBtn = document.querySelector(".family-site .family-site-btn");
+const familyList = document.querySelector(".family-site .site-list");
+const footerBottom = document.querySelector("#footer .footer-bottom");
+
+familyBtn.addEventListener("click", () => {
+  familyList.classList.toggle("on");
+  footerBottom.classList.toggle("list-on");
 });
