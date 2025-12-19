@@ -29,6 +29,7 @@ ScrollTrigger.scrollerProxy(document.body, {
     };
   },
 });
+
 // el-carousel__container 높이 계산  ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const containers = document.querySelectorAll(".el-carousel__container");
@@ -155,6 +156,70 @@ document.addEventListener("DOMContentLoaded", () => {
     goNext();
     startAutoPlay();
   });
+
+  let startX = 0;
+  let deltaX = 0;
+  let isDragging = false;
+
+  const SWIPE_THRESHOLD = 80; // 이 이상 움직여야 슬라이드 전환
+
+  function onStart(x) {
+    startX = x;
+    deltaX = 0;
+    isDragging = true;
+    stopAutoPlay();
+  }
+
+  function onMove(x) {
+    if (!isDragging) return;
+    deltaX = x - startX;
+  }
+
+  function onEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    if (deltaX > SWIPE_THRESHOLD) {
+      goPrev();
+    } else if (deltaX < -SWIPE_THRESHOLD) {
+      goNext();
+    }
+
+    startAutoPlay();
+    deltaX = 0;
+  }
+
+  /* ====== mouse ====== */
+  main.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    onStart(e.clientX);
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    onMove(e.clientX);
+  });
+
+  window.addEventListener("mouseup", onEnd);
+
+  /* ====== touch ====== */
+  main.addEventListener(
+    "touchstart",
+    (e) => {
+      onStart(e.touches[0].clientX);
+    },
+    { passive: true }
+  );
+
+  main.addEventListener(
+    "touchmove",
+    (e) => {
+      onMove(e.touches[0].clientX);
+    },
+    { passive: true }
+  );
+
+  main.addEventListener("touchend", onEnd);
 
   updateSlide(0);
   startAutoPlay();
@@ -697,22 +762,180 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", checkViewport);
   checkViewport();
 });
+// (8) pc-gnb 메뉴바 이동 ==================================================================================
+const navBar = document.querySelector(".nav_bar");
+const bar = document.querySelector("span.bar");
+const utilWrap = document.querySelector(".util_wrap");
+const logo = document.querySelector(".header .logo");
+
+// ================= bar 이동 =================
+function moveBarTo(li) {
+  if (!bar || !li) return;
+
+  const rect = li.getBoundingClientRect();
+
+  bar.style.opacity = "1";
+  bar.style.width = `${rect.width}px`;
+  bar.style.left = `${rect.left}px`;
+}
+
+window.addEventListener("resize", () => {
+  const active = document.querySelector(".lnb_sub_list.on");
+  if (active) {
+    moveBarTo(active);
+  }
+});
+
+// ================= pc - gnb  =================
+document.addEventListener("DOMContentLoaded", () => {
+  const lnbItems = document.querySelectorAll(
+    ".lnb_sub_list.lnb_02, .lnb_sub_list.lnb_03, .lnb_sub_list.lnb_04, .lnb_sub_list.lnb_05"
+  );
+
+  function closeAll() {
+    lnbItems.forEach((li) => li.classList.remove("on"));
+    header.classList.remove("isBgWhite");
+    dimmed.classList.remove("show");
+    navBar.classList.remove("is-hidden");
+
+    if (bar) {
+      bar.style.opacity = "0";
+      bar.style.width = "0";
+    }
+  }
+
+  lnbItems.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (li.classList.contains("on")) {
+        closeAll();
+        return;
+      }
+
+      closeAll();
+
+      li.classList.add("on");
+      header.classList.add("isBgWhite");
+      dimmed.classList.add("show");
+      navBar.classList.add("is-hidden");
+
+      moveBarTo(li);
+    });
+
+    li.querySelector(".btn_close")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeAll();
+    });
+  });
+
+  logo.addEventListener("click", closeAll);
+  utilWrap.addEventListener("mouseenter", closeAll);
+  dimmed.addEventListener("click", closeAll);
+});
+// ====== mobile 메뉴 sub wrap ======
+document.addEventListener("DOMContentLoaded", () => {
+  const depthItems = document.querySelectorAll(
+    ".lnb_menu .sub_contents .depth1 > li"
+  );
+
+  depthItems.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      if (window.innerWidth > 767) return;
+
+      e.stopPropagation();
+
+      depthItems.forEach((item) => {
+        if (item !== li) item.classList.remove("on");
+      });
+
+      li.classList.toggle("on");
+    });
+  });
+});
+const isMobile = () => window.innerWidth <= 767;
+
+const header = document.querySelector(".header");
+const dimmed = document.querySelector(".dimmed");
 // ============================= moibile 검색 / 메뉴 버튼 ==================================
+// const isMobile = () => window.innerWidth <= 767;
+// const mobileSearchOpen = document.querySelector(
+//   ".mobile-controller .search-btn"
+// );
+// const mobileSearchForm = document.querySelector(".m-search");
+// const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
+
+// const header = document.querySelector(".header");
+// const dimmed = document.querySelector(".dimmed");
+
+// function closeSearch() {
+//   mobileSearchForm.classList.remove("on");
+//   header.classList.remove("isSearch");
+// }
+
+// function closeMenu() {
+//   header.classList.remove("isOpen");
+
+//   mobileMenuOpen.querySelector(".menu-ico")?.classList.remove("is-active");
+//   document.querySelector(".nav_bar")?.classList.remove("is-hidden");
+//   document.querySelector(".header .logo svg")?.classList.remove("color-white");
+// }
+
+// function updateDimmed() {
+//   dimmed.classList.toggle(
+//     "show",
+//     header.classList.contains("isSearch") || header.classList.contains("isOpen")
+//   );
+// }
+
+// mobileSearchOpen.addEventListener("click", () => {
+//   if (!isMobile()) return;
+
+//   const isSearchOpen = header.classList.contains("isSearch");
+
+//   closeMenu();
+
+//   if (isSearchOpen) {
+//     closeSearch();
+//   } else {
+//     mobileSearchForm.classList.add("on");
+//     header.classList.add("isSearch");
+//   }
+
+//   updateDimmed();
+// });
+
+// mobileMenuOpen.addEventListener("click", () => {
+//   if (!isMobile()) return;
+//   const isMenuOpen = header.classList.contains("isOpen");
+
+//   closeSearch();
+
+//   if (isMenuOpen) {
+//     closeMenu();
+//   } else {
+//     header.classList.add("isOpen");
+
+//     mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active");
+//     document.querySelector(".nav_bar")?.classList.add("is-hidden");
+//     document.querySelector(".header .logo svg")?.classList.add("color-white");
+//   }
+
+//   updateDimmed();
+// });
 const mobileSearchOpen = document.querySelector(
   ".mobile-controller .search-btn"
 );
 const mobileSearchForm = document.querySelector(".m-search");
 const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
 
-const header = document.querySelector(".header");
-const dimmed = document.querySelector(".dimmed");
-
-function closeSearch() {
+function closeMobileSearch() {
   mobileSearchForm.classList.remove("on");
   header.classList.remove("isSearch");
 }
 
-function closeMenu() {
+function closeMobileMenu() {
   header.classList.remove("isOpen");
 
   mobileMenuOpen.querySelector(".menu-ico")?.classList.remove("is-active");
@@ -720,47 +943,49 @@ function closeMenu() {
   document.querySelector(".header .logo svg")?.classList.remove("color-white");
 }
 
-function updateDimmed() {
-  const active =
-    header.classList.contains("isSearch") ||
-    header.classList.contains("isOpen");
-
-  dimmed.classList.toggle("show", active);
+function updateMobileDimmed() {
+  dimmed.classList.toggle(
+    "show",
+    header.classList.contains("isSearch") || header.classList.contains("isOpen")
+  );
 }
 
 mobileSearchOpen.addEventListener("click", () => {
-  const isSearchOpen = header.classList.contains("isSearch");
+  if (!isMobile()) return;
 
-  // 메뉴가 열려있으면 닫기
-  closeMenu();
+  const opened = header.classList.contains("isSearch");
+  closeMobileMenu();
 
-  if (isSearchOpen) {
-    closeSearch();
-  } else {
-    mobileSearchForm.classList.add("on");
-    header.classList.add("isSearch");
-  }
+  opened
+    ? closeMobileSearch()
+    : (mobileSearchForm.classList.add("on"), header.classList.add("isSearch"));
 
-  updateDimmed();
+  updateMobileDimmed();
 });
 
 mobileMenuOpen.addEventListener("click", () => {
-  const isMenuOpen = header.classList.contains("isOpen");
+  if (!isMobile()) return;
 
-  // 검색 열려있으면 닫기
-  closeSearch();
+  const opened = header.classList.contains("isOpen");
+  closeMobileSearch();
 
-  if (isMenuOpen) {
-    closeMenu();
-  } else {
-    header.classList.add("isOpen");
+  opened
+    ? closeMobileMenu()
+    : (header.classList.add("isOpen"),
+      mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active"),
+      document.querySelector(".nav_bar")?.classList.add("is-hidden"),
+      document
+        .querySelector(".header .logo svg")
+        ?.classList.add("color-white"));
 
-    mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active");
-    document.querySelector(".nav_bar")?.classList.add("is-hidden");
-    document.querySelector(".header .logo svg")?.classList.add("color-white");
-  }
+  updateMobileDimmed();
+});
 
-  updateDimmed();
+dimmed.addEventListener("click", () => {
+  if (!isMobile()) return;
+  closeMobileSearch();
+  closeMobileMenu();
+  updateMobileDimmed();
 });
 // search - tab 버튼 ==========================================================
 const tabItems = document.querySelectorAll(".m-search__tab .tab-menu__icon");
@@ -779,12 +1004,152 @@ tabItems.forEach((item, index) => {
     tabLists[index].classList.add("show");
   });
 });
-// dimmed 클릭시 닫기 =============================================================
 dimmed.addEventListener("click", () => {
   closeSearch();
+  closeMenu();
   updateDimmed();
 });
 
+// pc search ==============================================================
+// document.addEventListener("DOMContentLoaded", () => {
+//   const header = document.querySelector(".header");
+//   const dimmed = document.querySelector(".dimmed");
+//   const loginBtn = document.querySelector(".btn-login");
+//   const languageBtn = document.querySelector(".lang-select");
+
+//   const searchBtn = document.querySelector(".btn_search");
+//   const searchWrap = document.querySelector(".search_wrap");
+//   const searchInput = searchWrap?.querySelector(".search__bar");
+
+//   const recentSearch = searchWrap?.querySelector(".recent-search");
+//   const btnDel = searchWrap?.querySelector(".btn_del");
+//   const btnClose = searchWrap?.querySelector(".btn_close");
+
+//   let recentTimer = null;
+
+//   /* ================= 공통 닫기 ================= */
+//   function closeSearch() {
+//     searchWrap.classList.remove("on");
+//     header.classList.remove("isSearch", "isBgWhite");
+//     updateDimmed();
+
+//     if (recentTimer) {
+//       clearTimeout(recentTimer);
+//       recentTimer = null;
+//     }
+
+//     recentSearch?.classList.remove("show");
+//   }
+
+//   /* ================= recent-search 자동 숨김 ================= */
+//   function showRecentTemporarily() {
+//     if (!recentSearch) return;
+
+//     recentSearch.classList.add("show");
+
+//     if (recentTimer) clearTimeout(recentTimer);
+
+//     recentTimer = setTimeout(() => {
+//       recentSearch.classList.remove("show");
+//     }, 2500);
+//   }
+
+//   /* ================= 검색 버튼 클릭 ================= */
+//   searchBtn?.addEventListener("click", () => {
+//     searchWrap.classList.add("on");
+//     header.classList.add("isSearch", "isBgWhite");
+//     updateDimmed();
+
+//     showRecentTemporarily();
+//   });
+
+//   /* ================= input 클릭 시 recent-search ================= */
+//   searchInput?.addEventListener("focus", () => {
+//     if (!recentSearch) return;
+//     recentSearch.classList.add("show");
+//   });
+
+//   /* ================= recent 삭제 ================= */
+//   btnDel?.addEventListener("click", (e) => {
+//     e.stopPropagation();
+//     recentSearch?.classList.remove("show");
+//   });
+
+//   /* ================= 닫기 버튼 ================= */
+//   btnClose?.addEventListener("click", closeSearch);
+
+//   /* ================= dimmed 클릭 ================= */
+//   dimmed?.addEventListener("click", closeSearch);
+// });
+document.addEventListener("DOMContentLoaded", () => {
+  const searchBtn = document.querySelector(".btn_search");
+  const searchWrap = document.querySelector(".search_wrap");
+  const searchInput = searchWrap?.querySelector(".search__bar");
+
+  const recentSearch = searchWrap?.querySelector(".recent-search");
+  const btnDel = searchWrap?.querySelector(".btn_del");
+  const btnClose = searchWrap?.querySelector(".btn_close");
+
+  const loginBtn = document.querySelector(".btn-login");
+  const languageBtn = document.querySelector(".lang-select");
+
+  let recentTimer = null;
+
+  /* ===== PC 검색 닫기 ===== */
+  function closePcSearch() {
+    searchWrap.classList.remove("on");
+    header.classList.remove("isSearch", "isBgWhite");
+    dimmed.classList.remove("show");
+
+    if (recentTimer) clearTimeout(recentTimer);
+    recentSearch?.classList.remove("show");
+  }
+
+  /* ===== recent 자동 숨김 ===== */
+  function showRecentTemporarily() {
+    recentSearch?.classList.add("show");
+
+    if (recentTimer) clearTimeout(recentTimer);
+    recentTimer = setTimeout(() => {
+      recentSearch?.classList.remove("show");
+    }, 2500);
+  }
+
+  /* ===== 검색 버튼 ===== */
+  searchBtn?.addEventListener("click", () => {
+    if (isMobile()) return;
+
+    searchWrap.classList.add("on");
+    header.classList.add("isSearch", "isBgWhite");
+    dimmed.classList.add("show");
+
+    showRecentTemporarily();
+  });
+
+  /* ===== input 포커스 ===== */
+  searchInput?.addEventListener("focus", () => {
+    recentSearch?.classList.add("show");
+  });
+
+  /* ===== recent 삭제 ===== */
+  btnDel?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    recentSearch?.classList.remove("show");
+  });
+
+  /* ===== 닫기 버튼 ===== */
+  btnClose?.addEventListener("click", closePcSearch);
+
+  /* ===== dimmed ===== */
+  dimmed?.addEventListener("click", () => {
+    if (isMobile()) return;
+    closePcSearch();
+  });
+
+  /* 🔥 로그인 / 언어 hover 시 강제 종료 🔥 */
+  loginBtn?.addEventListener("mouseenter", closePcSearch);
+  languageBtn?.addEventListener("mouseenter", closePcSearch);
+});
 // =============================== (7) mobile 구조변경 - gnb_wrap item- util
 function buildMobileUtil() {
   const util = document.querySelector(".util_wrap .util");
@@ -1068,10 +1433,14 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
 
-  function transformElectricCarousel() {
-    if (window.innerWidth > BREAKPOINT) return;
+  document.querySelectorAll(".electric-carousel").forEach((carousel) => {
+    const originalHTML = carousel.innerHTML; // ⭐ PC 구조 저장
+    let isMobile = false;
 
-    document.querySelectorAll(".electric-carousel").forEach((carousel) => {
+    function transformToMobile() {
+      if (isMobile) return;
+      isMobile = true;
+
       const oldList = carousel.querySelector(".electric-lists");
       if (!oldList) return;
 
@@ -1084,18 +1453,32 @@ document.addEventListener("DOMContentLoaded", () => {
       boxes.forEach((box) => {
         const li = document.createElement("li");
         li.className = "electric-item";
-
         li.appendChild(box);
         newUl.appendChild(li);
       });
 
       oldList.remove();
-
       carousel.appendChild(newUl);
-    });
-  }
+    }
 
-  transformElectricCarousel();
+    function restoreToPC() {
+      if (!isMobile) return;
+      isMobile = false;
+
+      carousel.innerHTML = originalHTML; // ⭐ 구조 완전 복구
+    }
+
+    function check() {
+      if (window.innerWidth <= BREAKPOINT) {
+        transformToMobile();
+      } else {
+        restoreToPC();
+      }
+    }
+
+    check();
+    window.addEventListener("resize", check);
+  });
 });
 // (8) footer 버튼 토글 ==========================================================================
 const footerToggleBtn = document.querySelector(
