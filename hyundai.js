@@ -697,20 +697,72 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", checkViewport);
   checkViewport();
 });
-// =================moibile controlloer >>> search ==================================
+// ============================= moibile 검색 / 메뉴 버튼 ==================================
 const mobileSearchOpen = document.querySelector(
   ".mobile-controller .search-btn"
 );
 const mobileSearchForm = document.querySelector(".m-search");
-const header = document.querySelector(".header");
+const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
 
+const header = document.querySelector(".header");
 const dimmed = document.querySelector(".dimmed");
+
+function closeSearch() {
+  mobileSearchForm.classList.remove("on");
+  header.classList.remove("isSearch");
+}
+
+function closeMenu() {
+  header.classList.remove("isOpen");
+
+  mobileMenuOpen.querySelector(".menu-ico")?.classList.remove("is-active");
+  document.querySelector(".nav_bar")?.classList.remove("is-hidden");
+  document.querySelector(".header .logo svg")?.classList.remove("color-white");
+}
+
+function updateDimmed() {
+  const active =
+    header.classList.contains("isSearch") ||
+    header.classList.contains("isOpen");
+
+  dimmed.classList.toggle("show", active);
+}
+
 mobileSearchOpen.addEventListener("click", () => {
-  mobileSearchForm.classList.toggle("on");
-  dimmed.classList.toggle("show");
-  header.classList.toggle("isSearch");
+  const isSearchOpen = header.classList.contains("isSearch");
+
+  // 메뉴가 열려있으면 닫기
+  closeMenu();
+
+  if (isSearchOpen) {
+    closeSearch();
+  } else {
+    mobileSearchForm.classList.add("on");
+    header.classList.add("isSearch");
+  }
+
+  updateDimmed();
 });
 
+mobileMenuOpen.addEventListener("click", () => {
+  const isMenuOpen = header.classList.contains("isOpen");
+
+  // 검색 열려있으면 닫기
+  closeSearch();
+
+  if (isMenuOpen) {
+    closeMenu();
+  } else {
+    header.classList.add("isOpen");
+
+    mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active");
+    document.querySelector(".nav_bar")?.classList.add("is-hidden");
+    document.querySelector(".header .logo svg")?.classList.add("color-white");
+  }
+
+  updateDimmed();
+});
+// search - tab 버튼 ==========================================================
 const tabItems = document.querySelectorAll(".m-search__tab .tab-menu__icon");
 const tabLists = document.querySelectorAll(".m-tab__list");
 
@@ -727,93 +779,81 @@ tabItems.forEach((item, index) => {
     tabLists[index].classList.add("show");
   });
 });
-// =================moibile controlloer >>> menu ==================================
-// const mobileMenuLogo = document.querySelector(".header .logo svg");
-// const mobileNavBar = document.querySelector(".nav_bar");
-// // const headerIsOpen = document.querySelector(".header");
-
-// mobileMenuOpen.addEventListener("click", () => {
-//   mobileMenuOpenIcon.classList.toggle("is-active");
-//   dimmed.classList.toggle("show");
-//   mobileNavBar.classList.toggle("is-hidden");
-//   mobileMenuLogo.classList.toggle("color-white");
-//   header.classList.toggle("isOpen");
-// });
-const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
-
-mobileMenuOpen.addEventListener("click", () => {
-  const header = document.querySelector(".header");
-  const mobileMenuOpenIcon = mobileMenuOpen.querySelector(".menu-ico");
-  const mobileMenuLogo = document.querySelector(".header .logo svg");
-  const mobileNavBar = document.querySelector(".nav_bar");
-  const dimmed = document.querySelector(".dimmed");
-
-  mobileMenuOpenIcon.classList.toggle("is-active");
-  mobileNavBar.classList.toggle("is-hidden");
-  mobileMenuLogo.classList.toggle("color-white");
-  dimmed.classList.toggle("show");
-  header.classList.toggle("isOpen");
+// dimmed 클릭시 닫기 =============================================================
+dimmed.addEventListener("click", () => {
+  closeSearch();
+  updateDimmed();
 });
-// (7) mobile 구조변경 - gnb_wrap item- util
-document.addEventListener("DOMContentLoaded", () => {
+
+// =============================== (7) mobile 구조변경 - gnb_wrap item- util
+function buildMobileUtil() {
   const util = document.querySelector(".util_wrap .util");
+  if (!util || util.dataset.built === "true") return;
 
-  function toMobile() {
-    const util = document.querySelector(".util_wrap .util");
-    util.innerHTML = "";
+  util.dataset.built = "true"; // 중복 실행 방지
+  util.innerHTML = "";
 
-    // (1) 개인 로그인
-    const item1 = document.createElement("div");
-    item1.className = "item-util";
+  // (1) 개인 로그인
+  const item1 = document.createElement("div");
+  item1.className = "item-util";
+  const a1 = document.createElement("a");
+  a1.className = "btn-login";
+  a1.textContent = "개인 로그인";
+  item1.appendChild(a1);
 
-    const login1 = document.createElement("a");
-    login1.className = "btn-login";
-    login1.href = "#";
-    login1.textContent = "개인 로그인";
+  // (2) 법인 로그인
+  const item2 = document.createElement("div");
+  item2.className = "item-util";
+  const a2 = document.createElement("a");
+  a2.className = "btn-login";
+  a2.textContent = "법인 로그인";
+  item2.appendChild(a2);
 
-    item1.appendChild(login1);
+  // (3) 언어
+  const item3 = document.createElement("div");
+  item3.className = "item-util";
 
-    // (2) 법인 로그인
-    const item2 = document.createElement("div");
-    item2.className = "item-util";
+  const langBtn = document.createElement("button");
+  langBtn.className = "lang-select";
+  langBtn.textContent = "KR";
 
-    const login2 = document.createElement("a");
-    login2.className = "btn-login";
-    login2.href = "#";
-    login2.textContent = "법인 로그인";
+  const langWrap = document.createElement("div");
+  langWrap.className = "lang_wrap";
 
-    item2.appendChild(login2);
+  const ul = document.createElement("ul");
 
-    // (3) 언어 선택 (자식 요소 포함)
-    const item3 = document.createElement("div");
-    item3.className = "item-util";
+  ["EN", "CN", "월드와이드", "상용글로벌"].forEach((text) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "#";
+    a.textContent = text;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
 
-    const langBtn = document.createElement("button");
-    langBtn.className = "lang-select";
-    langBtn.textContent = "KR";
+  langWrap.appendChild(ul);
+  item3.append(langBtn, langWrap);
 
-    const langWrap = document.createElement("div");
-    langWrap.className = "lang_wrap";
+  util.append(item1, item2, item3);
+}
 
-    const ul = document.createElement("ul");
-
-    ["EN", "CN", "JP"].forEach((text) => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = "#";
-      a.textContent = text;
-      li.appendChild(a);
-      ul.appendChild(li);
-    });
-
-    langWrap.appendChild(ul);
-    item3.append(langBtn, langWrap);
-
-    util.append(item1, item2, item3);
+// (7) gnb_wrap item- util =======================================================================
+const observer = new MutationObserver(() => {
+  if (header.classList.contains("isOpen") && window.innerWidth <= 767) {
+    buildMobileUtil();
   }
+});
 
-  window.addEventListener("resize", checkViewport);
-  checkViewport();
+observer.observe(header, {
+  attributes: true,
+  attributeFilter: ["class"],
+});
+
+document.addEventListener("click", (e) => {
+  const langBtn = e.target.closest(".lang-select");
+  if (!langBtn) return;
+
+  langBtn.classList.toggle("is-open");
 });
 
 // (7) mobile 구조변경 - quick-menu ==================================================================================
@@ -1005,12 +1045,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!isDragging) return;
       isDragging = false;
 
-      const threshold = container.clientWidth * 0.2; // 20% 이상 움직이면 전환
+      const threshold = container.clientWidth * 0.2;
 
       if (deltaX > threshold) {
-        moveTo(currentIndex - 1); // 오른쪽 스와이프 → 이전
+        moveTo(currentIndex - 1);
       } else if (deltaX < -threshold) {
-        moveTo(currentIndex + 1); // 왼쪽 스와이프 → 다음
+        moveTo(currentIndex + 1);
       }
 
       deltaX = 0;

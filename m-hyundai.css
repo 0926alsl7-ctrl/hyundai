@@ -79,6 +79,7 @@ a.btn.btn-external-sm {
 .header.isSearch {
   background-color: #fff;
 }
+
 .header.isOpen .top-mobile-area {
   background-color: #002c5f !important;
   position: fixed;
@@ -501,7 +502,7 @@ a.btn.btn-external-sm {
   position: relative;
   margin-right: 5px;
   padding-right: 10px;
-  font-size: 12px;
+  font-size: 11px;
   color: #002c5f;
 }
 
@@ -608,8 +609,14 @@ a.btn.btn-external-sm {
   vertical-align: middle;
   line-height: unset;
 }
-.header .gnb_wrap .lnb_menu .util_wrap .lang-select.is-open .lang_wrap {
+.header .gnb_wrap .lnb_menu .util_wrap .lang_wrap {
+  display: none;
+}
+.header .gnb_wrap .lnb_menu .util_wrap .lang-select.is-open + .lang_wrap {
   display: block;
+}
+.header .gnb_wrap .lnb_menu .util_wrap .lang-select.is-open::after {
+  transform: rotate(180deg);
 }
 .header .gnb_wrap .lnb_menu .util_wrap .lang-select:after {
   content: "";
