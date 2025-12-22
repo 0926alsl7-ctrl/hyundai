@@ -1068,31 +1068,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 6. gnb_wrap 메뉴 =======================================================================================================
 // (1) PC - lang, login 버튼 ================================================================================================
-$(".item-util")
-  .has(".lang-select")
-  .hover(
-    function () {
-      $(".lang-select").addClass("is-open");
-      $(".header").addClass("isBgWhite");
-    },
-    function () {
-      $(".lang-select").removeClass("is-open");
-      $(".header").removeClass("isBgWhite");
-    }
-  );
-$(".item-util")
-  .has(".login-btn")
-  .hover(
-    function () {
-      $(".login-btn").addClass("is-open");
-      $(".header").addClass("isBgWhite");
-    },
-    function () {
-      $(".login-btn").removeClass("is-open");
-      $(".header").removeClass("isBgWhite");
-    }
-  );
+$(".item-util .lang-select")
+  .on("mouseenter", function () {
+    $(".lang-select").addClass("is-open");
+    $(".header").addClass("isBgWhite");
+  })
+  .on("mouseleave", function () {
+    $(".lang-select").removeClass("is-open");
+    $(".header").removeClass("isBgWhite");
+  });
 
+$(".item-util .login-btn")
+  .on("mouseenter", function () {
+    $(".login-btn").addClass("is-open");
+    $(".header").addClass("isBgWhite");
+  })
+  .on("mouseleave", function () {
+    $(".login-btn").removeClass("is-open");
+    $(".header").removeClass("isBgWhite");
+  });
 // (2) PC - gnb_wrap ==================================================================================
 const navBar = document.querySelector(".nav_bar");
 const bar = document.querySelector("span.bar");

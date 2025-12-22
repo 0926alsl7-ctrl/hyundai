@@ -2651,6 +2651,15 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     height: 100%;
   }
   /* lang-select is open 추가 ============================================================= */
+  .lang_wrap,
+  .login-wrap {
+    display: none;
+  }
+
+  .lang-select.is-open + .lang_wrap,
+  .login-btn.is-open + .login-wrap {
+    display: block;
+  }
   .header
     .inner_wrap
     .gnb_wrap
@@ -2709,7 +2718,6 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     border: 1px solid #eee;
     border-top: 0;
     transform: translateX(-50%);
-    display: none;
   }
   .header
     .inner_wrap
@@ -2809,7 +2817,6 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     border-top: 0;
     background-color: #fff;
     transform: translate(-50%, 0);
-    display: none;
   }
   .header
     .inner_wrap
@@ -2902,10 +2909,6 @@ a.btn[class*="btn-external"].btn-external-sm::after {
   }
   /* login/lang is open 추가 =====================================================  */
 
-  .header .item-util:has(.lang-select):hover .lang_wrap,
-  .header .item-util:has(.lang-select):focus-within .lang_wrap {
-    display: block !important;
-  }
   .header
     .inner_wrap
     .gnb_wrap
@@ -2936,10 +2939,6 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     text-decoration-thickness: 2px;
   }
 
-  .header .item-util:has(.login-btn):hover .login-wrap,
-  .header .item-util:has(.login-btn):focus-within .login-wrap {
-    display: block !important;
-  }
   /* menu창 */
   .header
     .inner_wrap
