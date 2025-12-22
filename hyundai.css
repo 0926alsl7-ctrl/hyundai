@@ -198,14 +198,18 @@ input[type="text"] {
 .dimmed.show {
   display: block;
 }
-.header.isTransparent.isBgWhite.isSearch {
+
+.header.isBgWhite {
   background-color: #fff;
 }
 .header.isSearch {
+  background-color: #fff !important;
+}
+.header.isTransparent.isBgWhite {
   background-color: #fff;
 }
-.header.isFixed.isSearch {
-  background-color: #fff !important;
+.header.isTransparent.isBgWhite.isSearch {
+  background-color: #fff;
 }
 .btn-circle {
   position: relative;

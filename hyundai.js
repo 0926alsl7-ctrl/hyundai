@@ -29,8 +29,10 @@ ScrollTrigger.scrollerProxy(document.body, {
     };
   },
 });
+// 0. 공통 DOM
+const header = document.querySelector(".header");
 
-// el-carousel__container 높이 계산  ==================================================================================
+// 1. el-carousel__container 높이 계산  ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const containers = document.querySelectorAll(".el-carousel__container");
 
@@ -49,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setCarouselHeight();
 });
 
+// 2. swiper ======================================================================================================
 // (1) 메인 swiper ================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector(".kv-main");
@@ -161,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let deltaX = 0;
   let isDragging = false;
 
-  const SWIPE_THRESHOLD = 80; // 이 이상 움직여야 슬라이드 전환
+  const SWIPE_THRESHOLD = 80;
 
   function onStart(x) {
     startX = x;
@@ -189,7 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
     deltaX = 0;
   }
 
-  /* ====== mouse ====== */
   main.addEventListener("mousedown", (e) => {
     e.preventDefault();
     onStart(e.clientX);
@@ -202,7 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("mouseup", onEnd);
 
-  /* ====== touch ====== */
   main.addEventListener(
     "touchstart",
     (e) => {
@@ -351,7 +352,8 @@ document.addEventListener("DOMContentLoaded", () => {
     li.addEventListener("click", () => updateElectric(i));
   });
 });
-// (4) Tab1 ==============================================================================================
+// 3. Tab ======================================================================================================
+// (1) Tab1 ==============================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const modelData = {
     all: [
@@ -410,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-// (5) Tab2 ==============================================================================================
+// (2) Tab2 ==============================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const newsData = {
     all: [
@@ -657,34 +659,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-// (6) scroll events ================================================================================================
-$(".item-util")
-  .has(".lang-select")
-  .hover(
-    function () {
-      $(".lang-select").addClass("is-open");
-      $(".header").addClass("isBgWhite");
-    },
-    function () {
-      $(".lang-select").removeClass("is-open");
-      $(".header").removeClass("isBgWhite");
-    }
-  );
-$(".item-util")
-  .has(".login-btn")
-  .hover(
-    function () {
-      $(".login-btn").addClass("is-open");
-      $(".header").addClass("isBgWhite");
-    },
-    function () {
-      $(".login-btn").removeClass("is-open");
-      $(".header").removeClass("isBgWhite");
-    }
-  );
-// scroll events =>  header / nav_bar ==========================================================
+
+// 4. Scroll events ======================================================================================================
+// (1) scroll event - header / nav_bar ==========================================================
 window.addEventListener("scroll", () => {
-  const header = document.querySelector(".header");
   const navBar = document.querySelector(".nav_bar");
 
   const scrollTop = window.scrollY;
@@ -707,7 +685,7 @@ window.addEventListener("scroll", () => {
   navBar.style.width = `${progressWidth}%`;
 });
 
-// scroll events =>  footer / area-floating ==========================================================
+// (2) scroll events - area-floating >> footer mode show ==========================================================
 document.addEventListener("DOMContentLoaded", () => {
   const floating = document.querySelector(".area-floating");
   const footer = document.querySelector("#footer");
@@ -733,8 +711,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(footer);
 });
-
-// (7) mobile 구조변경 - tab area ==================================================================================
+// 5. Mobile 구조 변경 ======================================================================================================
+// (1) mobile 구조변경 - tab area ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const tapArea = document.querySelector(".tap-area");
   const innerWrap = document.querySelector(".inner_wrap");
@@ -762,403 +740,14 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", checkViewport);
   checkViewport();
 });
-// (8) pc-gnb 메뉴바 이동 ==================================================================================
-const navBar = document.querySelector(".nav_bar");
-const bar = document.querySelector("span.bar");
-const utilWrap = document.querySelector(".util_wrap");
-const logo = document.querySelector(".header .logo");
-
-// ================= bar 이동 =================
-function moveBarTo(li) {
-  if (!bar || !li) return;
-
-  const rect = li.getBoundingClientRect();
-
-  bar.style.opacity = "1";
-  bar.style.width = `${rect.width}px`;
-  bar.style.left = `${rect.left}px`;
-}
-
-window.addEventListener("resize", () => {
-  const active = document.querySelector(".lnb_sub_list.on");
-  if (active) {
-    moveBarTo(active);
-  }
-});
-
-// ================= pc - gnb  =================
-document.addEventListener("DOMContentLoaded", () => {
-  const lnbItems = document.querySelectorAll(
-    ".lnb_sub_list.lnb_02, .lnb_sub_list.lnb_03, .lnb_sub_list.lnb_04, .lnb_sub_list.lnb_05"
-  );
-
-  function closeAll() {
-    lnbItems.forEach((li) => li.classList.remove("on"));
-    header.classList.remove("isBgWhite");
-    dimmed.classList.remove("show");
-    navBar.classList.remove("is-hidden");
-
-    if (bar) {
-      bar.style.opacity = "0";
-      bar.style.width = "0";
-    }
-  }
-
-  lnbItems.forEach((li) => {
-    li.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (li.classList.contains("on")) {
-        closeAll();
-        return;
-      }
-
-      closeAll();
-
-      li.classList.add("on");
-      header.classList.add("isBgWhite");
-      dimmed.classList.add("show");
-      navBar.classList.add("is-hidden");
-
-      moveBarTo(li);
-    });
-
-    li.querySelector(".btn_close")?.addEventListener("click", (e) => {
-      e.stopPropagation();
-      closeAll();
-    });
-  });
-
-  logo.addEventListener("click", closeAll);
-  utilWrap.addEventListener("mouseenter", closeAll);
-  dimmed.addEventListener("click", closeAll);
-});
-// ====== mobile 메뉴 sub wrap ======
-document.addEventListener("DOMContentLoaded", () => {
-  const depthItems = document.querySelectorAll(
-    ".lnb_menu .sub_contents .depth1 > li"
-  );
-
-  depthItems.forEach((li) => {
-    li.addEventListener("click", (e) => {
-      if (window.innerWidth > 767) return;
-
-      e.stopPropagation();
-
-      depthItems.forEach((item) => {
-        if (item !== li) item.classList.remove("on");
-      });
-
-      li.classList.toggle("on");
-    });
-  });
-});
-const isMobile = () => window.innerWidth <= 767;
-
-const header = document.querySelector(".header");
-const dimmed = document.querySelector(".dimmed");
-// ============================= moibile 검색 / 메뉴 버튼 ==================================
-// const isMobile = () => window.innerWidth <= 767;
-// const mobileSearchOpen = document.querySelector(
-//   ".mobile-controller .search-btn"
-// );
-// const mobileSearchForm = document.querySelector(".m-search");
-// const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
-
-// const header = document.querySelector(".header");
-// const dimmed = document.querySelector(".dimmed");
-
-// function closeSearch() {
-//   mobileSearchForm.classList.remove("on");
-//   header.classList.remove("isSearch");
-// }
-
-// function closeMenu() {
-//   header.classList.remove("isOpen");
-
-//   mobileMenuOpen.querySelector(".menu-ico")?.classList.remove("is-active");
-//   document.querySelector(".nav_bar")?.classList.remove("is-hidden");
-//   document.querySelector(".header .logo svg")?.classList.remove("color-white");
-// }
-
-// function updateDimmed() {
-//   dimmed.classList.toggle(
-//     "show",
-//     header.classList.contains("isSearch") || header.classList.contains("isOpen")
-//   );
-// }
-
-// mobileSearchOpen.addEventListener("click", () => {
-//   if (!isMobile()) return;
-
-//   const isSearchOpen = header.classList.contains("isSearch");
-
-//   closeMenu();
-
-//   if (isSearchOpen) {
-//     closeSearch();
-//   } else {
-//     mobileSearchForm.classList.add("on");
-//     header.classList.add("isSearch");
-//   }
-
-//   updateDimmed();
-// });
-
-// mobileMenuOpen.addEventListener("click", () => {
-//   if (!isMobile()) return;
-//   const isMenuOpen = header.classList.contains("isOpen");
-
-//   closeSearch();
-
-//   if (isMenuOpen) {
-//     closeMenu();
-//   } else {
-//     header.classList.add("isOpen");
-
-//     mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active");
-//     document.querySelector(".nav_bar")?.classList.add("is-hidden");
-//     document.querySelector(".header .logo svg")?.classList.add("color-white");
-//   }
-
-//   updateDimmed();
-// });
-const mobileSearchOpen = document.querySelector(
-  ".mobile-controller .search-btn"
-);
-const mobileSearchForm = document.querySelector(".m-search");
-const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
-
-function closeMobileSearch() {
-  mobileSearchForm.classList.remove("on");
-  header.classList.remove("isSearch");
-}
-
-function closeMobileMenu() {
-  header.classList.remove("isOpen");
-
-  mobileMenuOpen.querySelector(".menu-ico")?.classList.remove("is-active");
-  document.querySelector(".nav_bar")?.classList.remove("is-hidden");
-  document.querySelector(".header .logo svg")?.classList.remove("color-white");
-}
-
-function updateMobileDimmed() {
-  dimmed.classList.toggle(
-    "show",
-    header.classList.contains("isSearch") || header.classList.contains("isOpen")
-  );
-}
-
-mobileSearchOpen.addEventListener("click", () => {
-  if (!isMobile()) return;
-
-  const opened = header.classList.contains("isSearch");
-  closeMobileMenu();
-
-  opened
-    ? closeMobileSearch()
-    : (mobileSearchForm.classList.add("on"), header.classList.add("isSearch"));
-
-  updateMobileDimmed();
-});
-
-mobileMenuOpen.addEventListener("click", () => {
-  if (!isMobile()) return;
-
-  const opened = header.classList.contains("isOpen");
-  closeMobileSearch();
-
-  opened
-    ? closeMobileMenu()
-    : (header.classList.add("isOpen"),
-      mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active"),
-      document.querySelector(".nav_bar")?.classList.add("is-hidden"),
-      document
-        .querySelector(".header .logo svg")
-        ?.classList.add("color-white"));
-
-  updateMobileDimmed();
-});
-
-dimmed.addEventListener("click", () => {
-  if (!isMobile()) return;
-  closeMobileSearch();
-  closeMobileMenu();
-  updateMobileDimmed();
-});
-// search - tab 버튼 ==========================================================
-const tabItems = document.querySelectorAll(".m-search__tab .tab-menu__icon");
-const tabLists = document.querySelectorAll(".m-tab__list");
-
-tabItems.forEach((item, index) => {
-  item.addEventListener("click", () => {
-    tabItems.forEach((i) => {
-      i.classList.remove("active");
-      i.querySelector("button").classList.remove("active");
-    });
-    tabLists.forEach((list) => list.classList.remove("show"));
-
-    item.classList.add("active");
-    item.querySelector("button").classList.add("active");
-    tabLists[index].classList.add("show");
-  });
-});
-dimmed.addEventListener("click", () => {
-  closeSearch();
-  closeMenu();
-  updateDimmed();
-});
-
-// pc search ==============================================================
-// document.addEventListener("DOMContentLoaded", () => {
-//   const header = document.querySelector(".header");
-//   const dimmed = document.querySelector(".dimmed");
-//   const loginBtn = document.querySelector(".btn-login");
-//   const languageBtn = document.querySelector(".lang-select");
-
-//   const searchBtn = document.querySelector(".btn_search");
-//   const searchWrap = document.querySelector(".search_wrap");
-//   const searchInput = searchWrap?.querySelector(".search__bar");
-
-//   const recentSearch = searchWrap?.querySelector(".recent-search");
-//   const btnDel = searchWrap?.querySelector(".btn_del");
-//   const btnClose = searchWrap?.querySelector(".btn_close");
-
-//   let recentTimer = null;
-
-//   /* ================= 공통 닫기 ================= */
-//   function closeSearch() {
-//     searchWrap.classList.remove("on");
-//     header.classList.remove("isSearch", "isBgWhite");
-//     updateDimmed();
-
-//     if (recentTimer) {
-//       clearTimeout(recentTimer);
-//       recentTimer = null;
-//     }
-
-//     recentSearch?.classList.remove("show");
-//   }
-
-//   /* ================= recent-search 자동 숨김 ================= */
-//   function showRecentTemporarily() {
-//     if (!recentSearch) return;
-
-//     recentSearch.classList.add("show");
-
-//     if (recentTimer) clearTimeout(recentTimer);
-
-//     recentTimer = setTimeout(() => {
-//       recentSearch.classList.remove("show");
-//     }, 2500);
-//   }
-
-//   /* ================= 검색 버튼 클릭 ================= */
-//   searchBtn?.addEventListener("click", () => {
-//     searchWrap.classList.add("on");
-//     header.classList.add("isSearch", "isBgWhite");
-//     updateDimmed();
-
-//     showRecentTemporarily();
-//   });
-
-//   /* ================= input 클릭 시 recent-search ================= */
-//   searchInput?.addEventListener("focus", () => {
-//     if (!recentSearch) return;
-//     recentSearch.classList.add("show");
-//   });
-
-//   /* ================= recent 삭제 ================= */
-//   btnDel?.addEventListener("click", (e) => {
-//     e.stopPropagation();
-//     recentSearch?.classList.remove("show");
-//   });
-
-//   /* ================= 닫기 버튼 ================= */
-//   btnClose?.addEventListener("click", closeSearch);
-
-//   /* ================= dimmed 클릭 ================= */
-//   dimmed?.addEventListener("click", closeSearch);
-// });
-document.addEventListener("DOMContentLoaded", () => {
-  const searchBtn = document.querySelector(".btn_search");
-  const searchWrap = document.querySelector(".search_wrap");
-  const searchInput = searchWrap?.querySelector(".search__bar");
-
-  const recentSearch = searchWrap?.querySelector(".recent-search");
-  const btnDel = searchWrap?.querySelector(".btn_del");
-  const btnClose = searchWrap?.querySelector(".btn_close");
-
-  const loginBtn = document.querySelector(".btn-login");
-  const languageBtn = document.querySelector(".lang-select");
-
-  let recentTimer = null;
-
-  /* ===== PC 검색 닫기 ===== */
-  function closePcSearch() {
-    searchWrap.classList.remove("on");
-    header.classList.remove("isSearch", "isBgWhite");
-    dimmed.classList.remove("show");
-
-    if (recentTimer) clearTimeout(recentTimer);
-    recentSearch?.classList.remove("show");
-  }
-
-  /* ===== recent 자동 숨김 ===== */
-  function showRecentTemporarily() {
-    recentSearch?.classList.add("show");
-
-    if (recentTimer) clearTimeout(recentTimer);
-    recentTimer = setTimeout(() => {
-      recentSearch?.classList.remove("show");
-    }, 2500);
-  }
-
-  /* ===== 검색 버튼 ===== */
-  searchBtn?.addEventListener("click", () => {
-    if (isMobile()) return;
-
-    searchWrap.classList.add("on");
-    header.classList.add("isSearch", "isBgWhite");
-    dimmed.classList.add("show");
-
-    showRecentTemporarily();
-  });
-
-  /* ===== input 포커스 ===== */
-  searchInput?.addEventListener("focus", () => {
-    recentSearch?.classList.add("show");
-  });
-
-  /* ===== recent 삭제 ===== */
-  btnDel?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    recentSearch?.classList.remove("show");
-  });
-
-  /* ===== 닫기 버튼 ===== */
-  btnClose?.addEventListener("click", closePcSearch);
-
-  /* ===== dimmed ===== */
-  dimmed?.addEventListener("click", () => {
-    if (isMobile()) return;
-    closePcSearch();
-  });
-
-  /* 🔥 로그인 / 언어 hover 시 강제 종료 🔥 */
-  loginBtn?.addEventListener("mouseenter", closePcSearch);
-  languageBtn?.addEventListener("mouseenter", closePcSearch);
-});
-// =============================== (7) mobile 구조변경 - gnb_wrap item- util
+// (2) mobile 구조변경 - gnb_wrap > util ==================================================================================
 function buildMobileUtil() {
   const util = document.querySelector(".util_wrap .util");
   if (!util || util.dataset.built === "true") return;
 
-  util.dataset.built = "true"; // 중복 실행 방지
+  util.dataset.built = "true";
   util.innerHTML = "";
 
-  // (1) 개인 로그인
   const item1 = document.createElement("div");
   item1.className = "item-util";
   const a1 = document.createElement("a");
@@ -1166,7 +755,6 @@ function buildMobileUtil() {
   a1.textContent = "개인 로그인";
   item1.appendChild(a1);
 
-  // (2) 법인 로그인
   const item2 = document.createElement("div");
   item2.className = "item-util";
   const a2 = document.createElement("a");
@@ -1174,7 +762,6 @@ function buildMobileUtil() {
   a2.textContent = "법인 로그인";
   item2.appendChild(a2);
 
-  // (3) 언어
   const item3 = document.createElement("div");
   item3.className = "item-util";
 
@@ -1202,7 +789,6 @@ function buildMobileUtil() {
   util.append(item1, item2, item3);
 }
 
-// (7) gnb_wrap item- util =======================================================================
 const observer = new MutationObserver(() => {
   if (header.classList.contains("isOpen") && window.innerWidth <= 767) {
     buildMobileUtil();
@@ -1221,7 +807,7 @@ document.addEventListener("click", (e) => {
   langBtn.classList.toggle("is-open");
 });
 
-// (7) mobile 구조변경 - quick-menu ==================================================================================
+// (3) mobile 구조변경 -  quick-menu ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
   const quickMenu = document.querySelector(".quick-menu");
@@ -1261,7 +847,8 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", check);
   check();
 });
-// (7) mobile 구조변경 - box-list-slide ==================================================================================
+
+// (4) mobile 구조변경 - box-list-slide ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
   const sliders = document.querySelectorAll(".box-list-slide");
@@ -1315,7 +902,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (ind) ind.remove();
     }
 
-    /* ================= 이동 ================= */
     function updatePositions() {
       const items = layer.querySelectorAll(".el-carousel__item");
       const width = container.clientWidth;
@@ -1343,7 +929,6 @@ document.addEventListener("DOMContentLoaded", () => {
       updateButtons();
     }
 
-    /* ================= Indicator ================= */
     function createIndicators(count) {
       const old = slider.querySelector(".el-carousel__indicators");
       if (old) old.remove();
@@ -1379,7 +964,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    /* ================= 버튼 ================= */
     function updateButtons() {
       if (!prevBtn || !nextBtn) return;
       if (slider.classList.contains("is-loop")) return;
@@ -1391,7 +975,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     prevBtn?.addEventListener("click", () => moveTo(currentIndex - 1));
     nextBtn?.addEventListener("click", () => moveTo(currentIndex + 1));
-    /* ================= 터치 스와이프 ================= */
+
     let startX = 0;
     let deltaX = 0;
     let isDragging = false;
@@ -1420,7 +1004,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       deltaX = 0;
     });
-    /* ================= 반응형 ================= */
+
     function check() {
       window.innerWidth <= BREAKPOINT ? toMobile() : toPC();
     }
@@ -1429,12 +1013,13 @@ document.addEventListener("DOMContentLoaded", () => {
     check();
   });
 });
-// (7) mobile 구조변경 - electric section ==================================================================================
+
+// (5) mobile 구조변경 - section 02 - electric ==================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const BREAKPOINT = 767;
 
   document.querySelectorAll(".electric-carousel").forEach((carousel) => {
-    const originalHTML = carousel.innerHTML; // ⭐ PC 구조 저장
+    const originalHTML = carousel.innerHTML;
     let isMobile = false;
 
     function transformToMobile() {
@@ -1465,7 +1050,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!isMobile) return;
       isMobile = false;
 
-      carousel.innerHTML = originalHTML; // ⭐ 구조 완전 복구
+      carousel.innerHTML = originalHTML;
     }
 
     function check() {
@@ -1480,7 +1065,299 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", check);
   });
 });
-// (8) footer 버튼 토글 ==========================================================================
+
+// 6. gnb_wrap 메뉴 =======================================================================================================
+// (1) PC - lang, login 버튼 ================================================================================================
+$(".item-util")
+  .has(".lang-select")
+  .hover(
+    function () {
+      $(".lang-select").addClass("is-open");
+      $(".header").addClass("isBgWhite");
+    },
+    function () {
+      $(".lang-select").removeClass("is-open");
+      $(".header").removeClass("isBgWhite");
+    }
+  );
+$(".item-util")
+  .has(".login-btn")
+  .hover(
+    function () {
+      $(".login-btn").addClass("is-open");
+      $(".header").addClass("isBgWhite");
+    },
+    function () {
+      $(".login-btn").removeClass("is-open");
+      $(".header").removeClass("isBgWhite");
+    }
+  );
+
+// (2) PC - gnb_wrap ==================================================================================
+const navBar = document.querySelector(".nav_bar");
+const bar = document.querySelector("span.bar");
+const utilWrap = document.querySelector(".util_wrap");
+const logo = document.querySelector(".header .logo");
+
+function moveBarTo(li) {
+  if (!bar || !li) return;
+
+  const rect = li.getBoundingClientRect();
+
+  bar.style.opacity = "1";
+  bar.style.width = `${rect.width}px`;
+  bar.style.left = `${rect.left}px`;
+}
+
+window.addEventListener("resize", () => {
+  const active = document.querySelector(".lnb_sub_list.on");
+  if (active) {
+    moveBarTo(active);
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lnbItems = document.querySelectorAll(
+    ".lnb_sub_list.lnb_02, .lnb_sub_list.lnb_03, .lnb_sub_list.lnb_04, .lnb_sub_list.lnb_05"
+  );
+
+  function closeAll() {
+    if (header.classList.contains("isSearch")) return;
+    lnbItems.forEach((li) => li.classList.remove("on"));
+    header.classList.remove("isBgWhite");
+    dimmed.classList.remove("show");
+    navBar.classList.remove("is-hidden");
+
+    if (bar) {
+      bar.style.opacity = "0";
+      bar.style.width = "0";
+    }
+  }
+
+  lnbItems.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (li.classList.contains("on")) {
+        closeAll();
+        return;
+      }
+
+      closeAll();
+
+      li.classList.add("on");
+      header.classList.add("isBgWhite");
+      dimmed.classList.add("show");
+      navBar.classList.add("is-hidden");
+
+      moveBarTo(li);
+    });
+
+    li.querySelector(".btn_close")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeAll();
+    });
+  });
+
+  logo.addEventListener("click", closeAll);
+  utilWrap.addEventListener("mouseenter", closeAll);
+  dimmed.addEventListener("click", closeAll);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const depthItems = document.querySelectorAll(
+    ".lnb_menu .sub_contents .depth1 > li"
+  );
+
+  depthItems.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      if (window.innerWidth > 767) return;
+
+      e.stopPropagation();
+
+      depthItems.forEach((item) => {
+        if (item !== li) item.classList.remove("on");
+      });
+
+      li.classList.toggle("on");
+    });
+  });
+});
+
+// 7. 검색 버튼 ======================================================================================================
+// (1) mobile search 버튼 ================================================================
+const isMobile = () => window.innerWidth <= 767;
+
+const dimmed = document.querySelector(".dimmed");
+
+const mobileSearchOpen = document.querySelector(
+  ".mobile-controller .search-btn"
+);
+const mobileSearchForm = document.querySelector(".m-search");
+const mobileMenuOpen = document.querySelector(".mobile-controller .menu-btn");
+
+function closeMobileSearch() {
+  mobileSearchForm.classList.remove("on");
+  header.classList.remove("isSearch");
+}
+
+function closeMobileMenu() {
+  header.classList.remove("isOpen");
+
+  mobileMenuOpen.querySelector(".menu-ico")?.classList.remove("is-active");
+  document.querySelector(".nav_bar")?.classList.remove("is-hidden");
+  document.querySelector(".header .logo svg")?.classList.remove("color-white");
+}
+
+function updateMobileDimmed() {
+  if (!isMobile()) return;
+
+  dimmed.classList.toggle(
+    "show",
+    header.classList.contains("isSearch") || header.classList.contains("isOpen")
+  );
+}
+
+mobileSearchOpen.addEventListener("click", () => {
+  if (!isMobile()) return;
+
+  const opened = header.classList.contains("isSearch");
+  closeMobileMenu();
+
+  opened
+    ? closeMobileSearch()
+    : (mobileSearchForm.classList.add("on"), header.classList.add("isSearch"));
+
+  updateMobileDimmed();
+});
+
+mobileMenuOpen.addEventListener("click", () => {
+  if (!isMobile()) return;
+
+  const opened = header.classList.contains("isOpen");
+  closeMobileSearch();
+
+  opened
+    ? closeMobileMenu()
+    : (header.classList.add("isOpen"),
+      mobileMenuOpen.querySelector(".menu-ico")?.classList.add("is-active"),
+      document.querySelector(".nav_bar")?.classList.add("is-hidden"),
+      document
+        .querySelector(".header .logo svg")
+        ?.classList.add("color-white"));
+
+  updateMobileDimmed();
+});
+
+dimmed.addEventListener("click", () => {
+  if (!isMobile()) return;
+  closeMobileSearch();
+  closeMobileMenu();
+  updateMobileDimmed();
+});
+// mobile search - tab 버튼(최근/인기 검색어) ================================================================
+const tabItems = document.querySelectorAll(".m-search__tab .tab-menu__icon");
+const tabLists = document.querySelectorAll(".m-tab__list");
+
+tabItems.forEach((item, index) => {
+  item.addEventListener("click", () => {
+    tabItems.forEach((i) => {
+      i.classList.remove("active");
+      i.querySelector("button").classList.remove("active");
+    });
+    tabLists.forEach((list) => list.classList.remove("show"));
+
+    item.classList.add("active");
+    item.querySelector("button").classList.add("active");
+    tabLists[index].classList.add("show");
+  });
+});
+dimmed.addEventListener("click", () => {
+  closeMobileSearch();
+  closeMobileMenu();
+  updateMobileDimmed();
+});
+// (2) PC search 버튼 ================================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const searchBtn = document.querySelector(".btn_search");
+  const searchWrap = document.querySelector(".search_wrap");
+  const searchInput = searchWrap?.querySelector(".search__bar");
+
+  const recentSearch = searchWrap?.querySelector(".recent-search");
+  const btnDel = searchWrap?.querySelector(".btn_del");
+  const btnClose = searchWrap?.querySelector(".btn_close");
+
+  const loginBtn = document.querySelector(".btn-login");
+  const languageBtn = document.querySelector(".lang-select");
+
+  let recentTimer = null;
+
+  function isPcSearchOpen() {
+    return searchWrap.classList.contains("on");
+  }
+
+  function closePcSearch() {
+    searchWrap.classList.remove("on");
+    header.classList.remove("isSearch", "isBgWhite");
+    dimmed.classList.remove("show");
+
+    if (recentTimer) {
+      clearTimeout(recentTimer);
+      recentTimer = null;
+    }
+
+    recentSearch?.classList.remove("show");
+  }
+
+  function showRecentTemporarily() {
+    if (!recentSearch) return;
+
+    recentSearch?.classList.add("show");
+
+    if (recentTimer) clearTimeout(recentTimer);
+    recentTimer = setTimeout(() => {
+      recentSearch?.classList.remove("show");
+    }, 2500);
+  }
+
+  searchBtn?.addEventListener("click", () => {
+    if (isMobile()) return;
+
+    searchWrap.classList.add("on");
+    header.classList.add("isSearch", "isBgWhite");
+    dimmed.classList.add("show");
+
+    showRecentTemporarily();
+  });
+
+  searchInput?.addEventListener("click", () => {
+    recentSearch?.classList.add("show");
+  });
+
+  btnDel?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    recentSearch?.classList.remove("show");
+  });
+  btnClose?.addEventListener("click", closePcSearch);
+
+  dimmed?.addEventListener("click", () => {
+    if (isMobile()) return;
+    closePcSearch();
+  });
+
+  loginBtn?.addEventListener("mouseenter", () => {
+    if (!isPcSearchOpen()) return;
+    closePcSearch();
+  });
+  languageBtn?.addEventListener("mouseenter", () => {
+    if (!isPcSearchOpen()) return;
+    closePcSearch();
+  });
+});
+
+// 8. footer ======================================================================================
+// (1) footer 버튼 토글 ==================================================================================
 const footerToggleBtn = document.querySelector(
   ".wrap-footer .wrap-menu-toggle .area-icon"
 );

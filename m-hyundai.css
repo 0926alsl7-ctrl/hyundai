@@ -402,7 +402,7 @@ a.btn.btn-external-sm {
 }
 
 .header .gnb_wrap {
-  position: fixed;
+  position: fixed !important;
   z-index: 1001;
   top: 55px;
   right: 0;
@@ -411,7 +411,7 @@ a.btn.btn-external-sm {
   background-color: rgba(0, 0, 0, 0.7);
   overflow-y: auto;
   scroll-behavior: smooth;
-  overscroll-behavior: contain;
+  /* overscroll-behavior: contain; */
 }
 .header.isOpen .top-mobile-area .mobile-controller a.text-link {
   color: #fff;
@@ -484,6 +484,15 @@ a.btn.btn-external-sm {
   background-color: #fff;
 }
 /* mobile - gnb_Wrap */
+.header
+  .gnb_wrap
+  .lnb_menu
+  > .lnb_list
+  > .lnb_sub_list
+  > .sub_wrap
+  > .gnb_events {
+  display: none;
+}
 .header .gnb_wrap .lnb_menu {
   display: flex;
   flex-direction: column;
