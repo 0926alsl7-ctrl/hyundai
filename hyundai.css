@@ -1616,22 +1616,13 @@ a.btn::before {
   -webkit-box-pack: center;
 }
 
-.brand .list > li:hover .txt-wrap {
-  opacity: 1;
-}
-.brand .list > li:hover img {
-  transform: scale(1.08);
-}
-.brand .list > li:hover .link::before {
-  opacity: 1;
-}
 .brand .list > li .link .txt-wrap .txt {
   margin: 5px 0 0;
   font-size: 14px;
-  font-weight: bolder;
+  font-weight: 500;
 }
 .brand .list > li .link .txt-wrap .tit {
-  font-weight: 900;
+  font-weight: 700;
 }
 /* section -events ======================================================== */
 
@@ -1648,44 +1639,6 @@ a.btn::before {
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
-}
-.el-carousel__unit .el-image:hover::before {
-  display: block;
-}
-.el-carousel__unit .el-image:hover::after {
-  display: block;
-}
-.el-carousel__unit .el-image::before {
-  content: "";
-  display: none;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.el-carousel__unit .el-image::after {
-  content: "자세히 보기 +";
-  display: none;
-  position: absolute;
-  width: 100%;
-  height: auto;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: -0.4px;
-  text-align: center;
-}
-.el-image::after {
-  content: "";
-  display: block;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  width: 100%;
 }
 
 .el-carousel__unit .el-image img {
@@ -3180,6 +3133,15 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     width: 100%;
     height: auto;
   }
+  .brand .list > li:hover .txt-wrap {
+    opacity: 1;
+  }
+  .brand .list > li:hover img {
+    transform: scale(1.08);
+  }
+  .brand .list > li:hover .link::before {
+    opacity: 1;
+  }
   .el-carousel--solo .el-carousel__arrow--custom {
     display: none;
   }
@@ -3194,6 +3156,44 @@ a.btn[class*="btn-external"].btn-external-sm::after {
     opacity: 0;
     transition: opacity 0.5s ease;
     z-index: 1;
+  }
+  .el-carousel__unit .el-image:hover::before {
+    display: block;
+  }
+  .el-carousel__unit .el-image:hover::after {
+    display: block;
+  }
+  .el-carousel__unit .el-image::before {
+    content: "";
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .el-carousel__unit .el-image::after {
+    content: "자세히 보기 +";
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+    text-align: center;
+  }
+  .el-image::after {
+    content: "";
+    display: block;
+    top: 0;
+    height: 100%;
+    position: absolute;
+    width: 100%;
   }
   .tag-wrap {
     max-width: 1120px;

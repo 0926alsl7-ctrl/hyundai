@@ -1414,6 +1414,7 @@ a.btn[class*="btn-more"]::after {
 }
 .section-wrap .shop-best-wrap .best-list > li .link .price-wrap .price strong {
   font-size: 17px;
+  font-weight: bolder;
 }
 /* section05 brand ===================================================================================== */
 .brand .el-carousel {
